@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hide_artists_with_few_tracks_title">إخفاء الفنانين الذين لديهم أقل من 5 مقاطع</string>
+    <string name="hide_artists_with_few_tracks_summary">إظهار الفنانين الذين لديهم 5 مقاطع أو أكثر في المكتبة المحددة فقط. تبقى الأغاني متاحة.</string>
+    <string name="artist_filter_empty_hint">يظهر فقط الفنانون الذين لديهم 5 مقاطع على الأقل. يمكنك تعطيل الفلتر في الإعدادات ← المكتبة ← الفنانون.</string>
+</resources>

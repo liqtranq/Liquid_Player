@@ -338,4 +338,51 @@ class MusicDaoTest {
             musicDao.getSongsByAlbumId(201L).first().map(SongEntity::id)
         )
     }
+
+    private suspend fun insertArtistVisibilityFixture() {
+        val songs = listOf(101L to 4, 102L to 5, 103L to 6).flatMap { (artistId, count) ->
+            (1..count).map { index ->
+                val id = artistId * 100 + index
+                val directory = if (artistId == 103L && index > 4) "/blocked" else "/music"
+                createSongEntity(
+                    id, "Track $index", "Artist $artistId", "Album $artistId",
+                    "$directory/$id.mp3", artistId = artistId, albumId = artistId + 100
+                ).copy(
+                    albumArtistId = artistId,
+                    sourceType = if (artistId == 102L && index == 1) 1 else 0
+                )
+            }
+        }
+        insertSongsWithParents(songs)
+        musicDao.insertSongArtistCrossRefs(songs.map { SongArtistCrossRef(it.id, it.artistId, true) })
+    }
+
+    private suspend fun PagingSource<Int, ArtistEntity>.loadArtistIds(): List<Long> {
+        val result = load(PagingSource.LoadParams.Refresh<Int>(null, 100, false))
+        return (result as PagingSource.LoadResult.Page<Int, ArtistEntity>).data.map(ArtistEntity::id)
+    }
+
+    @Test
+    fun artistMinimum_keepsFiveAndSixTracks_andCanBeDisabled_inBothGroupingModes() = runTest {
+        insertArtistVisibilityFixture()
+        for (minTracks in listOf(5, 1)) {
+            val expected = if (minTracks == 5) listOf(102L, 103L) else listOf(101L, 102L, 103L)
+            assertEquals(expected, musicDao.getArtistsPaginated(emptyList(), false, 0, "artist_name_az", minTracks).loadArtistIds())
+            assertEquals(expected, musicDao.getArtistsPaginatedByAlbumArtist(emptyList(), false, 0, "artist_name_az", minTracks).loadArtistIds())
+            assertEquals(expected, musicDao.getArtistsWithSongCountsFiltered(emptyList(), false, 0, minTracks).first().map(ArtistEntity::id))
+            assertEquals(expected, musicDao.getArtistsWithSongCountsFilteredByAlbumArtist(emptyList(), false, 0, minTracks).first().map(ArtistEntity::id))
+        }
+    }
+
+    @Test
+    fun artistMinimum_countsOnlyTracksMatchingTheDirectoryAndStorageFilters() = runTest {
+        insertArtistVisibilityFixture()
+        // Artist 103 has six tracks in total, but only four in the selected directory.
+        assertEquals(listOf(102L), musicDao.getArtistsPaginated(listOf("/music"), true, 0, "artist_name_az", 5).loadArtistIds())
+        assertEquals(listOf(102L), musicDao.getArtistsPaginatedByAlbumArtist(listOf("/music"), true, 0, "artist_name_az", 5).loadArtistIds())
+        // Artist 102 has five tracks, but only four are local.
+        assertEquals(listOf(103L), musicDao.getArtistsWithSongCountsFiltered(emptyList(), false, 1, 5).first().map(ArtistEntity::id))
+        assertEquals(listOf(103L), musicDao.getArtistsWithSongCountsFilteredByAlbumArtist(emptyList(), false, 1, 5).first().map(ArtistEntity::id))
+        assertEquals(emptyList<Long>(), musicDao.getArtistsWithSongCountsFiltered(listOf("/music"), true, 1, 5).first().map(ArtistEntity::id))
+    }
 }

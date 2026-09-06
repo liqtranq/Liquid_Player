@@ -130,7 +130,8 @@ internal fun LibraryExpressiveEmptyState(
     tabId: LibraryTabId,
     storageFilter: StorageFilter,
     bottomBarHeight: Dp,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    subtitleOverride: String? = null
 ) {
     val spec = remember(tabId, storageFilter) { libraryEmptySpec(tabId, storageFilter) }
 
@@ -179,7 +180,7 @@ internal fun LibraryExpressiveEmptyState(
                     textAlign = TextAlign.Center
                 )
                 Text(
-                    text = stringResource(spec.subtitleRes),
+                    text = subtitleOverride ?: stringResource(spec.subtitleRes),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = TextAlign.Center

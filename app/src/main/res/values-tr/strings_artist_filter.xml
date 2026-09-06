@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hide_artists_with_few_tracks_title">5’ten az parçaya sahip sanatçıları gizle</string>
+    <string name="hide_artists_with_few_tracks_summary">Seçili kitaplıkta yalnızca en az 5 parçası olan sanatçıları göster. Parçalar erişilebilir kalır.</string>
+    <string name="artist_filter_empty_hint">Yalnızca en az 5 parçası olan sanatçılar gösterilir. Filtreyi Ayarlar → Kitaplık → Sanatçılar bölümünden kapatabilirsiniz.</string>
+</resources>

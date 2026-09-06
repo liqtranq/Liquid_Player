@@ -40,7 +40,8 @@ interface MusicRepository {
      */
     fun getPaginatedArtists(
         sortOption: com.lostf1sh.pixelplayeross.data.model.SortOption,
-        storageFilter: com.lostf1sh.pixelplayeross.data.model.StorageFilter = com.lostf1sh.pixelplayeross.data.model.StorageFilter.ALL
+        storageFilter: com.lostf1sh.pixelplayeross.data.model.StorageFilter = com.lostf1sh.pixelplayeross.data.model.StorageFilter.ALL,
+        minTracks: Int = 1
     ): Flow<PagingData<Artist>>
 
     /**
@@ -146,7 +147,8 @@ interface MusicRepository {
      * @return Flow that emits a complete list of Artist objects.
      */
     fun getArtists(
-        storageFilter: com.lostf1sh.pixelplayeross.data.model.StorageFilter = com.lostf1sh.pixelplayeross.data.model.StorageFilter.ALL
+        storageFilter: com.lostf1sh.pixelplayeross.data.model.StorageFilter = com.lostf1sh.pixelplayeross.data.model.StorageFilter.ALL,
+        minTracks: Int = 1
     ): Flow<List<Artist>>
 
     /**

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hide_artists_with_few_tracks_title">Ocultar artistas con menos de 5 canciones</string>
+    <string name="hide_artists_with_few_tracks_summary">Mostrar solo artistas con 5 o más canciones en la biblioteca seleccionada. Las canciones siguen disponibles.</string>
+    <string name="artist_filter_empty_hint">Solo se muestran artistas con al menos 5 canciones. Desactiva el filtro en Ajustes → Biblioteca → Artistas.</string>
+</resources>

@@ -590,10 +590,15 @@ fun LibraryArtistsTab(
         }
 
         artists.itemCount == 0 && refreshState is LoadState.NotLoading -> {
+            val hideFewTracks by playerViewModel.hideArtistsWithFewTracksFlow
+                .collectAsStateWithLifecycle(initialValue = true)
             LibraryExpressiveEmptyState(
                 tabId = LibraryTabId.ARTISTS,
                 storageFilter = storageFilter,
-                bottomBarHeight = bottomBarHeight
+                bottomBarHeight = bottomBarHeight,
+                subtitleOverride = if (hideFewTracks) {
+                    stringResource(R.string.artist_filter_empty_hint)
+                } else null
             )
         }
 

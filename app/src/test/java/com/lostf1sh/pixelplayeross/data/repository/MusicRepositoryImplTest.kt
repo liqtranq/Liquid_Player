@@ -44,6 +44,7 @@ class MusicRepositoryImplTest {
     @BeforeEach
     fun setUp() {
         Dispatchers.setMain(testDispatcher)
+        every { mockUserPreferencesRepository.groupByAlbumArtistFlow } returns flowOf(false)
         coEvery { mockUserPreferencesRepository.allowedDirectoriesFlow } returns flowOf(emptySet())
         coEvery { mockUserPreferencesRepository.blockedDirectoriesFlow } returns flowOf(setOf("/dummy"))
         coEvery { mockUserPreferencesRepository.initialSetupDoneFlow } returns flowOf(true)
@@ -61,7 +62,7 @@ class MusicRepositoryImplTest {
             println("getAllSongs called with: ${args[0]}, ${args[1]}")
             flowOf(emptyList())
         }
-        every { mockMusicDao.getArtistsWithSongCountsFiltered(any(), any(), any()) } returns flowOf(emptyList())
+        every { mockMusicDao.getArtistsWithSongCountsFiltered(any(), any(), any(), any()) } returns flowOf(emptyList())
 
         every { mockMusicDao.getSongs(any(), eq(true)) } answers {
             val allowedParams = firstArg<List<String>>()
@@ -209,7 +210,7 @@ class MusicRepositoryImplTest {
         val expectedArtists = allArtistEntities.map { 
             if (it.id == 101L) it.copy(trackCount = 2) else it 
         }.filter { it.id == 101L }
-        every { mockMusicDao.getArtistsWithSongCountsFiltered(any(), eq(true), any()) } returns flowOf(expectedArtists)
+        every { mockMusicDao.getArtistsWithSongCountsFiltered(any(), eq(true), any(), any()) } returns flowOf(expectedArtists)
         
         every { mockUserPreferencesRepository.allowedDirectoriesFlow } returns flowOf(allowedDirs)
         every { mockUserPreferencesRepository.initialSetupDoneFlow } returns flowOf(true)

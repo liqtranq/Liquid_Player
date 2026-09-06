@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hide_artists_with_few_tracks_title">Sembunyikan artis dengan kurang dari 5 lagu</string>
+    <string name="hide_artists_with_few_tracks_summary">Tampilkan hanya artis dengan minimal 5 lagu di koleksi yang dipilih. Lagu tetap tersedia.</string>
+    <string name="artist_filter_empty_hint">Hanya artis dengan minimal 5 lagu yang ditampilkan. Nonaktifkan filter di Setelan → Koleksi → Artis.</string>
+</resources>

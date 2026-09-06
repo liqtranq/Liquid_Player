@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hide_artists_with_few_tracks_title">Interpreten mit weniger als 5 Titeln ausblenden</string>
+    <string name="hide_artists_with_few_tracks_summary">Nur Interpreten mit mindestens 5 Titeln in der ausgewählten Mediathek anzeigen. Die Titel bleiben verfügbar.</string>
+    <string name="artist_filter_empty_hint">Es werden nur Interpreten mit mindestens 5 Titeln angezeigt. Den Filter können Sie unter Einstellungen → Mediathek → Interpreten deaktivieren.</string>
+</resources>

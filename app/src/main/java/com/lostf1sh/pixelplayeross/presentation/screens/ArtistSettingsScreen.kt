@@ -289,7 +289,23 @@ fun ArtistSettingsScreen(
                         )
                     }
                 ) {
-                    Column(modifier = Modifier.clip(shape = RoundedCornerShape(24.dp))) {
+                    Column(
+                        modifier = Modifier.clip(shape = RoundedCornerShape(24.dp)),
+                        verticalArrangement = Arrangement.spacedBy(2.dp)
+                    ) {
+                        SwitchSettingItem(
+                            title = stringResource(R.string.hide_artists_with_few_tracks_title),
+                            subtitle = stringResource(R.string.hide_artists_with_few_tracks_summary),
+                            checked = uiState.hideArtistsWithFewTracks,
+                            onCheckedChange = viewModel::setHideArtistsWithFewTracks,
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = Icons.Outlined.Person,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.secondary
+                                )
+                            }
+                        )
                         SwitchSettingItem(
                             title = stringResource(R.string.presentation_batch_g_artist_group_by_album_artist),
                             subtitle = stringResource(R.string.presentation_batch_g_artist_group_by_album_artist_sub),

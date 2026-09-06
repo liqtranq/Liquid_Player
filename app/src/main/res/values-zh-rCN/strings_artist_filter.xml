@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hide_artists_with_few_tracks_title">隐藏歌曲少于 5 首的艺术家</string>
+    <string name="hide_artists_with_few_tracks_summary">仅显示所选音乐库中拥有至少 5 首歌曲的艺术家。歌曲仍可播放。</string>
+    <string name="artist_filter_empty_hint">仅显示拥有至少 5 首歌曲的艺术家。可在设置 → 音乐库 → 艺术家中关闭此筛选。</string>
+</resources>

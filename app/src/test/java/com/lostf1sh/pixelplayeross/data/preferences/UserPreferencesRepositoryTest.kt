@@ -12,6 +12,30 @@ import java.nio.file.Files
 class UserPreferencesRepositoryTest {
 
     @Test
+    fun `artist filter defaults to enabled and persists without requiring a rescan`() = runTest {
+        val tempDir = Files.createTempDirectory("artist-filter-preferences-test")
+        try {
+            val store = PreferenceDataStoreFactory.create(
+                scope = backgroundScope,
+                produceFile = { tempDir.resolve("settings.preferences_pb").toFile() }
+            )
+            val repository = UserPreferencesRepository(store, Json)
+            assertTrue(repository.hideArtistsWithFewTracksFlow.first())
+            repository.setHideArtistsWithFewTracks(false)
+
+            val reloaded = UserPreferencesRepository(store, Json)
+            assertEquals(false, reloaded.hideArtistsWithFewTracksFlow.first())
+            assertEquals(false, reloaded.artistSettingsRescanRequiredFlow.first())
+
+            reloaded.setHideArtistsWithFewTracks(true)
+            assertTrue(repository.hideArtistsWithFewTracksFlow.first())
+            assertEquals(false, repository.artistSettingsRescanRequiredFlow.first())
+        } finally {
+            tempDir.toFile().deleteRecursively()
+        }
+    }
+
+    @Test
     fun `keep screen awake while playing is opt-in and persists`() = runTest {
         val tempDir = Files.createTempDirectory("user-preferences-repository-test")
         try {

@@ -174,6 +174,7 @@ constructor(
         val ARTIST_WORD_DELIMITERS = stringPreferencesKey("artist_word_delimiters")
         val EXTRACT_ARTISTS_FROM_TITLE = booleanPreferencesKey("extract_artists_from_title")
         val GROUP_BY_ALBUM_ARTIST = booleanPreferencesKey("group_by_album_artist")
+        val HIDE_ARTISTS_WITH_FEW_TRACKS = booleanPreferencesKey("hide_artists_with_few_tracks")
         val ARTIST_SETTINGS_RESCAN_REQUIRED =
                 booleanPreferencesKey("artist_settings_rescan_required")
 
@@ -485,6 +486,17 @@ constructor(
             dataStore.data.map { preferences ->
                 preferences[PreferencesKeys.GROUP_BY_ALBUM_ARTIST] ?: false
             }
+
+    val hideArtistsWithFewTracksFlow: Flow<Boolean> = dataStore.data.map { preferences ->
+        preferences[PreferencesKeys.HIDE_ARTISTS_WITH_FEW_TRACKS] ?: true
+    }.distinctUntilChanged()
+
+    // This only filters the Artists tab; it does not change scanned music or tags.
+    suspend fun setHideArtistsWithFewTracks(enabled: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKeys.HIDE_ARTISTS_WITH_FEW_TRACKS] = enabled
+        }
+    }
 
     suspend fun setGroupByAlbumArtist(enabled: Boolean) {
         dataStore.edit { preferences ->

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hide_artists_with_few_tracks_title">Hide artists with fewer than 5 tracks</string>
+    <string name="hide_artists_with_few_tracks_summary">Show only artists with 5 or more tracks in the selected library. Songs remain available.</string>
+    <string name="artist_filter_empty_hint">Only artists with at least 5 tracks are shown. You can disable this filter in Settings → Library → Artists.</string>
+</resources>

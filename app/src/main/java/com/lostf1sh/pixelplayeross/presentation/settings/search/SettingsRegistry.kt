@@ -30,6 +30,16 @@ object SettingsRegistry {
                 keywordsStatic = listOf("artist", "delimiters", "split", "multi artist", "parsing", "separator")
             ),
             SettingSpec(
+                id = "library_hide_artists_with_few_tracks",
+                itemKey = "item_library_hide_artists_with_few_tracks",
+                titleRes = R.string.hide_artists_with_few_tracks_title,
+                subtitleRes = R.string.hide_artists_with_few_tracks_summary,
+                category = SettingsCategory.LIBRARY,
+                subscreenRoute = Screen.ArtistSettings.createRoute(),
+                type = SettingType.NAVIGABLE_CARD,
+                keywordsStatic = listOf("artist", "tracks", "hide", "minimum", "5", "исполнители", "треки", "скрыть")
+            ),
+            SettingSpec(
                 id = "library_min_duration",
                 itemKey = "item_library_min_duration",
                 titleRes = R.string.setcat_min_song_duration,

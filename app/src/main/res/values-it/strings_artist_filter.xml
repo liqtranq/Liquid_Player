@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hide_artists_with_few_tracks_title">Nascondi artisti con meno di 5 brani</string>
+    <string name="hide_artists_with_few_tracks_summary">Mostra solo gli artisti con almeno 5 brani nella raccolta selezionata. I brani restano disponibili.</string>
+    <string name="artist_filter_empty_hint">Sono mostrati solo gli artisti con almeno 5 brani. Disattiva il filtro in Impostazioni → Raccolta → Artisti.</string>
+</resources>

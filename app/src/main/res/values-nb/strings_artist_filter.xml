@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hide_artists_with_few_tracks_title">Skjul artister med færre enn 5 spor</string>
+    <string name="hide_artists_with_few_tracks_summary">Vis bare artister med minst 5 spor i det valgte biblioteket. Sporene er fortsatt tilgjengelige.</string>
+    <string name="artist_filter_empty_hint">Bare artister med minst 5 spor vises. Slå av filteret under Innstillinger → Bibliotek → Artister.</string>
+</resources>

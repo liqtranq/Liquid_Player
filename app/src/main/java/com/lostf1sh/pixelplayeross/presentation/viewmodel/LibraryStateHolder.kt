@@ -134,10 +134,14 @@ class LibraryStateHolder @Inject constructor(
 
     @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
     val artistsPagingFlow: kotlinx.coroutines.flow.Flow<androidx.paging.PagingData<Artist>> =
-        kotlinx.coroutines.flow.combine(_currentArtistSortOption, effectiveStorageFilter) { sort, filter ->
-            sort to filter
-        }.flatMapLatest { (sortOption, filter) ->
-            musicRepository.getPaginatedArtists(sortOption, filter)
+        kotlinx.coroutines.flow.combine(
+            _currentArtistSortOption,
+            effectiveStorageFilter,
+            userPreferencesRepository.hideArtistsWithFewTracksFlow
+        ) { sort, filter, hideFewTracks ->
+            Triple(sort, filter, if (hideFewTracks) 5 else 1)
+        }.flatMapLatest { (sortOption, filter, minTracks) ->
+            musicRepository.getPaginatedArtists(sortOption, filter, minTracks)
         }
         .flowOn(Dispatchers.IO)
 
@@ -269,8 +273,13 @@ class LibraryStateHolder @Inject constructor(
         artistsJob = scope?.launch {
             _isLoadingCategories.value = true
             @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
-            effectiveStorageFilter.flatMapLatest { filter ->
-                musicRepository.getArtists(filter)
+            kotlinx.coroutines.flow.combine(
+                effectiveStorageFilter,
+                userPreferencesRepository.hideArtistsWithFewTracksFlow
+            ) { filter, hideFewTracks ->
+                filter to if (hideFewTracks) 5 else 1
+            }.flatMapLatest { (filter, minTracks) ->
+                musicRepository.getArtists(filter, minTracks)
             }.conflate().collect { artists ->
                 val sortedArtists = withContext(Dispatchers.Default) {
                     sortArtistsList(artists, _currentArtistSortOption.value).toImmutableList()

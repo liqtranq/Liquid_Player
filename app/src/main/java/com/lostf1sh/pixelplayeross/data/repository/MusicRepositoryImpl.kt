@@ -220,7 +220,8 @@ class MusicRepositoryImpl @Inject constructor(
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun getPaginatedArtists(
         sortOption: SortOption,
-        storageFilter: StorageFilter
+        storageFilter: StorageFilter,
+        minTracks: Int
     ): Flow<PagingData<Artist>> {
         return combine(
             userPreferencesRepository.allowedDirectoriesFlow,
@@ -241,14 +242,16 @@ class MusicRepositoryImpl @Inject constructor(
                                     allowedParentDirs = allowedParentDirs,
                                     applyDirectoryFilter = applyDirectoryFilter,
                                     filterMode = storageFilter.toFilterMode(),
-                                    sortOrder = sortOption.storageKey
+                                    sortOrder = sortOption.storageKey,
+                                    minTracks = minTracks
                                 )
                             } else {
                                 musicDao.getArtistsPaginated(
                                     allowedParentDirs = allowedParentDirs,
                                     applyDirectoryFilter = applyDirectoryFilter,
                                     filterMode = storageFilter.toFilterMode(),
-                                    sortOrder = sortOption.storageKey
+                                    sortOrder = sortOption.storageKey,
+                                    minTracks = minTracks
                                 )
                             }
                         }
@@ -409,19 +412,34 @@ class MusicRepositoryImpl @Inject constructor(
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    override fun getArtists(storageFilter: StorageFilter): Flow<List<Artist>> {
+    override fun getArtists(
+        storageFilter: StorageFilter,
+        minTracks: Int
+    ): Flow<List<Artist>> {
         return combine(
             userPreferencesRepository.allowedDirectoriesFlow,
-            userPreferencesRepository.blockedDirectoriesFlow
-        ) { allowedDirs, blockedDirs ->
-            allowedDirs to blockedDirs
-        }.flatMapLatest { (allowedDirs, blockedDirs) ->
+            userPreferencesRepository.blockedDirectoriesFlow,
+            userPreferencesRepository.groupByAlbumArtistFlow
+        ) { allowedDirs, blockedDirs, groupByAlbumArtist ->
+            Triple(allowedDirs, blockedDirs, groupByAlbumArtist)
+        }.flatMapLatest { (allowedDirs, blockedDirs, groupByAlbumArtist) ->
             val (allowedParentDirs, applyFilter) = computeAllowedDirs(allowedDirs, blockedDirs)
-            musicDao.getArtistsWithSongCountsFiltered(
-                allowedParentDirs = allowedParentDirs,
-                applyDirectoryFilter = applyFilter,
-                filterMode = storageFilter.toFilterMode()
-            )
+            val artistsFlow = if (groupByAlbumArtist) {
+                musicDao.getArtistsWithSongCountsFilteredByAlbumArtist(
+                    allowedParentDirs = allowedParentDirs,
+                    applyDirectoryFilter = applyFilter,
+                    filterMode = storageFilter.toFilterMode(),
+                    minTracks = minTracks
+                )
+            } else {
+                musicDao.getArtistsWithSongCountsFiltered(
+                    allowedParentDirs = allowedParentDirs,
+                    applyDirectoryFilter = applyFilter,
+                    filterMode = storageFilter.toFilterMode(),
+                    minTracks = minTracks
+                )
+            }
+            artistsFlow
                 .distinctUntilChanged()
                 .map { entities ->
                     val artists = entities.map { it.toArtist() }

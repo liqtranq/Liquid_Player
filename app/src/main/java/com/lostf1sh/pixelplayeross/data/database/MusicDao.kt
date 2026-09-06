@@ -1407,6 +1407,7 @@ interface MusicDao {
             )
         )
         GROUP BY artists.id
+        HAVING COUNT(DISTINCT songs.id) >= :minTracks
         ORDER BY
             CASE WHEN :sortOrder = 'artist_name_az' THEN artists.name END COLLATE NOCASE ASC,
             CASE WHEN :sortOrder = 'artist_name_za' THEN artists.name END COLLATE NOCASE DESC,
@@ -1419,7 +1420,8 @@ interface MusicDao {
         allowedParentDirs: List<String>,
         applyDirectoryFilter: Boolean,
         filterMode: Int,
-        sortOrder: String
+        sortOrder: String,
+        minTracks: Int = 1
     ): PagingSource<Int, ArtistEntity>
 
     /**
@@ -1447,6 +1449,7 @@ interface MusicDao {
             )
         )
         GROUP BY artists.id
+        HAVING COUNT(DISTINCT songs.id) >= :minTracks
         ORDER BY
             CASE WHEN :sortOrder = 'artist_name_az' THEN artists.name END COLLATE NOCASE ASC,
             CASE WHEN :sortOrder = 'artist_name_za' THEN artists.name END COLLATE NOCASE DESC,
@@ -1459,7 +1462,8 @@ interface MusicDao {
         allowedParentDirs: List<String>,
         applyDirectoryFilter: Boolean,
         filterMode: Int,
-        sortOrder: String
+        sortOrder: String,
+        minTracks: Int = 1
     ): PagingSource<Int, ArtistEntity>
 
     @Query("""
@@ -1959,12 +1963,42 @@ interface MusicDao {
             )
         )
         GROUP BY artists.id
+        HAVING COUNT(DISTINCT songs.id) >= :minTracks
         ORDER BY artists.name ASC
     """)
     fun getArtistsWithSongCountsFiltered(
         allowedParentDirs: List<String>,
         applyDirectoryFilter: Boolean,
-        filterMode: Int
+        filterMode: Int,
+        minTracks: Int = 1
+    ): Flow<List<ArtistEntity>>
+
+    @Query("""
+        SELECT artists.id, artists.name, artists.image_url, artists.custom_image_uri,
+               COUNT(DISTINCT songs.id) AS track_count
+        FROM songs
+        INNER JOIN artists ON artists.id = songs.album_artist_id
+        WHERE (:applyDirectoryFilter = 0 OR songs.id < 0 OR songs.parent_directory_path IN (:allowedParentDirs))
+        AND (
+            :filterMode = 0
+            OR (
+                :filterMode = 1
+                AND songs.source_type = 0
+            )
+            OR (
+                :filterMode = 2
+                AND songs.source_type != 0
+            )
+        )
+        GROUP BY artists.id
+        HAVING COUNT(DISTINCT songs.id) >= :minTracks
+        ORDER BY artists.name ASC
+    """)
+    fun getArtistsWithSongCountsFilteredByAlbumArtist(
+        allowedParentDirs: List<String>,
+        applyDirectoryFilter: Boolean,
+        filterMode: Int,
+        minTracks: Int = 1
     ): Flow<List<ArtistEntity>>
 
     /**

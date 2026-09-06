@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hide_artists_with_few_tracks_title">Скрывать исполнителей, у которых меньше 5 треков</string>
+    <string name="hide_artists_with_few_tracks_summary">Показывать только исполнителей с 5 и более треками в выбранной медиатеке. Песни останутся доступны.</string>
+    <string name="artist_filter_empty_hint">Здесь отображаются исполнители с 5 и более треками. Фильтр можно отключить: Настройки → Библиотека → Исполнители.</string>
+</resources>

@@ -19,6 +19,7 @@ data class ArtistSettingsUiState(
     val wordDelimiters: List<String> = UserPreferencesRepository.DEFAULT_ARTIST_WORD_DELIMITERS,
     val extractArtistsFromTitle: Boolean = true,
     val groupByAlbumArtist: Boolean = false,
+    val hideArtistsWithFewTracks: Boolean = true,
     val rescanRequired: Boolean = false,
     val isResyncing: Boolean = false
 )
@@ -40,6 +41,11 @@ class ArtistSettingsViewModel @Inject constructor(
         )
 
     init {
+        viewModelScope.launch {
+            userPreferencesRepository.hideArtistsWithFewTracksFlow.collect { enabled ->
+                _uiState.update { it.copy(hideArtistsWithFewTracks = enabled) }
+            }
+        }
         viewModelScope.launch {
             userPreferencesRepository.artistDelimitersFlow.collect { delimiters ->
                 _uiState.update { it.copy(artistDelimiters = delimiters) }
@@ -80,6 +86,12 @@ class ArtistSettingsViewModel @Inject constructor(
     fun setGroupByAlbumArtist(enabled: Boolean) {
         viewModelScope.launch {
             userPreferencesRepository.setGroupByAlbumArtist(enabled)
+        }
+    }
+
+    fun setHideArtistsWithFewTracks(enabled: Boolean) {
+        viewModelScope.launch {
+            userPreferencesRepository.setHideArtistsWithFewTracks(enabled)
         }
     }
 

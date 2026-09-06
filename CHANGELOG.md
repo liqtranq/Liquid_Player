@@ -2,6 +2,12 @@
 
 Changes to Liquid Player. Earlier PixelPlayerOSS history is preserved below.
 
+## [Unreleased]
+
+### Added
+- Hide artists with fewer than five tracks in the selected library by default. The filter can be disabled in Settings → Library → Artists and applies immediately without rescanning or removing songs.
+- Apply the artist threshold before pagination, including album-artist grouping, directory and storage filters. Show a filter explanation when the Artists tab is empty.
+
 ## [0.4.1] - 2026-09-06
 
 ### Changed

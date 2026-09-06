@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hide_artists_with_few_tracks_title">트랙이 5개 미만인 아티스트 숨기기</string>
+    <string name="hide_artists_with_few_tracks_summary">선택한 라이브러리에서 트랙이 5개 이상인 아티스트만 표시합니다. 노래는 계속 이용할 수 있습니다.</string>
+    <string name="artist_filter_empty_hint">트랙이 5개 이상인 아티스트만 표시됩니다. 설정 → 라이브러리 → 아티스트에서 필터를 끌 수 있습니다.</string>
+</resources>

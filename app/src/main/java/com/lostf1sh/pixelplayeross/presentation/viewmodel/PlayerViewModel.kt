@@ -1041,6 +1041,7 @@ class PlayerViewModel @Inject constructor(
 
     val albumsFlow: StateFlow<ImmutableList<Album>> = libraryStateHolder.albums
     val artistsFlow: StateFlow<ImmutableList<Artist>> = libraryStateHolder.artists
+    val hideArtistsWithFewTracksFlow = userPreferencesRepository.hideArtistsWithFewTracksFlow
 
     var searchQuery by mutableStateOf("")
         private set
