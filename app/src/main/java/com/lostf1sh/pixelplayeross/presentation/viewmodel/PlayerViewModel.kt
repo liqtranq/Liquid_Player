@@ -3827,6 +3827,17 @@ class PlayerViewModel @Inject constructor(
         playbackStateHolder.seekTo(position)
     }
 
+    fun seekRelative(deltaMs: Long) {
+        val current = playbackStateHolder.currentPosition.value
+        seekTo((current + deltaMs).coerceAtLeast(0L))
+    }
+
+    fun setPlaybackSpeed(speed: Float) {
+        viewModelScope.launch {
+            userPreferencesRepository.setPlaybackSpeed(speed)
+        }
+    }
+
     fun nextSong() {
         AdvancedPerformanceDiagnostics.recordEventIfEnabled(
             type = AdvancedPerformanceDiagnostics.EventTypes.PLAYBACK,

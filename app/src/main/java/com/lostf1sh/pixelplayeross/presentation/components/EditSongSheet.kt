@@ -6,11 +6,15 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.gestures.rememberTransformableState
 import androidx.compose.foundation.gestures.transformable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -56,6 +60,15 @@ import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Repeat
 import androidx.compose.material.icons.rounded.RepeatOne
+import androidx.compose.material.icons.rounded.AutoFixHigh
+import androidx.compose.material.icons.rounded.CloudDownload
+import androidx.compose.material.icons.rounded.CleaningServices
+import androidx.compose.material.icons.rounded.Search
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import android.graphics.BitmapFactory
+import android.widget.Toast
+import com.lostf1sh.pixelplayeross.data.media.tagstudio.AutoTagUtils
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
@@ -193,6 +206,12 @@ private fun EditSongContent(
 
     var showInfoDialog by remember { mutableStateOf(false) }
     val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+    var isSearchingOnlineArt by remember { mutableStateOf(false) }
+    var onlineCoverCandidates by remember { mutableStateOf<List<String>>(emptyList()) }
+    var isDownloadingCandidate by remember { mutableStateOf(false) }
+    var isDeezerAutoFilling by remember { mutableStateOf(false) }
+
     val pickCoverArtLauncher = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
         if (uri != null) {
             pendingCoverArtUri = uri
@@ -201,6 +220,7 @@ private fun EditSongContent(
     }
 
     LaunchedEffect(song) {
+        onlineCoverCandidates = emptyList()
         title = song.title
         artist = song.displayArtist
         album = song.album
@@ -364,10 +384,47 @@ private fun EditSongContent(
                     albumArtUri = song.albumArtUriString,
                     preview = coverArtPreview,
                     isDeleted = isCoverArtDeleted,
+                    coverCandidates = onlineCoverCandidates,
+                    isSearchingOnline = isSearchingOnlineArt,
                     onPickNewArt = {
                         pickCoverArtLauncher.launch(
                             PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
                         )
+                    },
+                    onSearchOnlineArt = {
+                        coroutineScope.launch {
+                            isSearchingOnlineArt = true
+                            val artistQuery = artist.ifBlank { song.displayArtist }
+                            val albumQuery = album.ifBlank { song.album }.ifBlank { title.ifBlank { song.title } }
+                            val candidates = withContext(Dispatchers.IO) {
+                                AutoTagUtils.fetchCoverCandidates(artistQuery, albumQuery)
+                            }
+                            onlineCoverCandidates = candidates
+                            isSearchingOnlineArt = false
+                            if (candidates.isEmpty()) {
+                                Toast.makeText(context, "Обложки в сети не найдены", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    },
+                    onSelectOnlineCover = { url ->
+                        coroutineScope.launch {
+                            isDownloadingCandidate = true
+                            val bytes = withContext(Dispatchers.IO) {
+                                AutoTagUtils.downloadImageBytes(url)
+                            }
+                            if (bytes != null) {
+                                val bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                                if (bmp != null) {
+                                    coverArtPreview = bmp.asImageBitmap()
+                                    editedCoverArt = CoverArtUpdate(bytes, COVER_ART_MIME_TYPE)
+                                    isCoverArtDeleted = false
+                                    Toast.makeText(context, "Обложка применена", Toast.LENGTH_SHORT).show()
+                                }
+                            } else {
+                                Toast.makeText(context, "Не удалось загрузить обложку", Toast.LENGTH_SHORT).show()
+                            }
+                            isDownloadingCandidate = false
+                        }
                     },
                     onDelete = {
                         coverArtPreview = null
@@ -380,6 +437,114 @@ private fun EditSongContent(
                         isCoverArtDeleted = false
                     }
                 )
+            }
+
+            item {
+                Surface(
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(12.dp),
+                    color = MaterialTheme.colorScheme.surfaceContainerLow,
+                    border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
+                ) {
+                    Column(
+                        modifier = Modifier.padding(12.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "AIMP TAG STUDIO // БЫСТРЫЕ ДЕЙСТВИЯ",
+                                style = MaterialTheme.typography.labelSmall,
+                                fontFamily = FontFamily.Monospace,
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                            if (isDeezerAutoFilling) {
+                                CircularProgressIndicator(modifier = Modifier.size(14.dp), strokeWidth = 2.dp)
+                            }
+                        }
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .horizontalScroll(rememberScrollState()),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            AssistChip(
+                                onClick = {
+                                    val parsed = AutoTagUtils.parseFilenameToMetadata(song.path.ifBlank { song.title })
+                                    if (parsed != null) {
+                                        if (parsed.first.isNotBlank()) artist = parsed.first
+                                        if (parsed.second.isNotBlank()) title = parsed.second
+                                        Toast.makeText(context, "Теги извлечены из имени файла", Toast.LENGTH_SHORT).show()
+                                    } else {
+                                        Toast.makeText(context, "Не удалось распознать имя файла", Toast.LENGTH_SHORT).show()
+                                    }
+                                },
+                                leadingIcon = {
+                                    Icon(Icons.Rounded.AutoFixHigh, contentDescription = null, modifier = Modifier.size(16.dp))
+                                },
+                                label = { Text("Из имени файла", fontFamily = FontFamily.Monospace, fontSize = 11.sp) }
+                            )
+
+                            AssistChip(
+                                onClick = {
+                                    title = AutoTagUtils.cleanMetadataText(title)
+                                    artist = AutoTagUtils.cleanMetadataText(artist)
+                                    album = AutoTagUtils.cleanMetadataText(album)
+                                    Toast.makeText(context, "Мусорные строки и ссылки очищены", Toast.LENGTH_SHORT).show()
+                                },
+                                leadingIcon = {
+                                    Icon(Icons.Rounded.CleaningServices, contentDescription = null, modifier = Modifier.size(16.dp))
+                                },
+                                label = { Text("Очистить мусор", fontFamily = FontFamily.Monospace, fontSize = 11.sp) }
+                            )
+
+                            AssistChip(
+                                onClick = {
+                                    coroutineScope.launch {
+                                        isDeezerAutoFilling = true
+                                        val query = if (artist.isNotBlank()) "$artist $title" else title
+                                        val results = withContext(Dispatchers.IO) {
+                                            AutoTagUtils.searchTrackOnDeezer(query)
+                                        }
+                                        val best = results.firstOrNull()
+                                        if (best != null) {
+                                            title = best.title
+                                            artist = best.artist
+                                            if (best.album.isNotBlank()) album = best.album
+                                            best.coverUrl?.let { coverUrl ->
+                                                val bytes = withContext(Dispatchers.IO) {
+                                                    AutoTagUtils.downloadImageBytes(coverUrl)
+                                                }
+                                                if (bytes != null) {
+                                                    val bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                                                    if (bmp != null) {
+                                                        coverArtPreview = bmp.asImageBitmap()
+                                                        editedCoverArt = CoverArtUpdate(bytes, COVER_ART_MIME_TYPE)
+                                                        isCoverArtDeleted = false
+                                                    }
+                                                }
+                                            }
+                                            Toast.makeText(context, "Теги и обложка подтянуты из Deezer", Toast.LENGTH_SHORT).show()
+                                        } else {
+                                            Toast.makeText(context, "Трек не найден в Deezer", Toast.LENGTH_SHORT).show()
+                                        }
+                                        isDeezerAutoFilling = false
+                                    }
+                                },
+                                enabled = !isDeezerAutoFilling,
+                                leadingIcon = {
+                                    Icon(Icons.Rounded.Search, contentDescription = null, modifier = Modifier.size(16.dp))
+                                },
+                                label = { Text("Авто-теги Deezer", fontFamily = FontFamily.Monospace, fontSize = 11.sp) }
+                            )
+                        }
+                    }
+                }
             }
 
             item {
@@ -876,7 +1041,11 @@ private fun CoverArtEditorCard(
     albumArtUri: String?,
     preview: ImageBitmap?,
     isDeleted: Boolean,
+    coverCandidates: List<String> = emptyList(),
+    isSearchingOnline: Boolean = false,
     onPickNewArt: () -> Unit,
+    onSearchOnlineArt: () -> Unit = {},
+    onSelectOnlineCover: (String) -> Unit = {},
     onDelete: () -> Unit,
     onReset: () -> Unit,
 ) {
@@ -981,35 +1150,87 @@ private fun CoverArtEditorCard(
                 textAlign = TextAlign.Center
             )
 
-            Column(
+            Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically)
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                FilledTonalButton(onClick = onPickNewArt) {
-                    Icon(Icons.Rounded.Image, contentDescription = null)
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(stringResource(R.string.edit_song_change_cover_art), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                FilledTonalButton(
+                    onClick = onPickNewArt,
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Icon(Icons.Rounded.Image, contentDescription = null, modifier = Modifier.size(18.dp))
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Text("Галерея", maxLines = 1, overflow = TextOverflow.Ellipsis)
                 }
 
-                if (preview != null || isDeleted) {
-                    TextButton(onClick = onReset) {
-                        Icon(Icons.Rounded.Restore, contentDescription = null)
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Text(stringResource(R.string.action_reset), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                FilledTonalButton(
+                    onClick = onSearchOnlineArt,
+                    enabled = !isSearchingOnline,
+                    modifier = Modifier.weight(1f)
+                ) {
+                    if (isSearchingOnline) {
+                        CircularProgressIndicator(modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
+                    } else {
+                        Icon(Icons.Rounded.CloudDownload, contentDescription = null, modifier = Modifier.size(18.dp))
                     }
-                } else if (albumArtUri != null) {
-                    FilledTonalButton(
-                        onClick = onDelete,
-                        colors = ButtonDefaults.filledTonalButtonColors(
-                            containerColor = MaterialTheme.colorScheme.errorContainer,
-                            contentColor = MaterialTheme.colorScheme.onErrorContainer
-                        )
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Text("Из сети", maxLines = 1, overflow = TextOverflow.Ellipsis)
+                }
+            }
+
+            if (coverCandidates.isNotEmpty()) {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    Text(
+                        text = "ВЫБЕРИТЕ ОБЛОЖКУ ИЗ DEEZER (1000x1000):",
+                        style = MaterialTheme.typography.labelSmall,
+                        fontFamily = FontFamily.Monospace,
+                        color = MaterialTheme.colorScheme.tertiary
+                    )
+                    LazyRow(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Icon(Icons.Rounded.Delete, contentDescription = null)
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(stringResource(R.string.edit_song_delete_cover_art), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        items(coverCandidates) { candidateUrl ->
+                            Box(
+                                modifier = Modifier
+                                    .size(72.dp)
+                                    .clip(RoundedCornerShape(8.dp))
+                                    .border(1.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(8.dp))
+                                    .clickable { onSelectOnlineCover(candidateUrl) }
+                            ) {
+                                SmartImage(
+                                    model = candidateUrl,
+                                    contentDescription = "Candidate Art",
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentScale = ContentScale.Crop
+                                )
+                            }
+                        }
                     }
+                }
+            }
+
+            if (preview != null || isDeleted) {
+                TextButton(onClick = onReset) {
+                    Icon(Icons.Rounded.Restore, contentDescription = null)
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(stringResource(R.string.action_reset), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                }
+            } else if (albumArtUri != null) {
+                FilledTonalButton(
+                    onClick = onDelete,
+                    colors = ButtonDefaults.filledTonalButtonColors(
+                        containerColor = MaterialTheme.colorScheme.errorContainer,
+                        contentColor = MaterialTheme.colorScheme.onErrorContainer
+                    )
+                ) {
+                    Icon(Icons.Rounded.Delete, contentDescription = null)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(stringResource(R.string.edit_song_delete_cover_art), maxLines = 1, overflow = TextOverflow.Ellipsis)
                 }
             }
         }

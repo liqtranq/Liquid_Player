@@ -23,6 +23,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import android.widget.Toast
+import androidx.compose.material.icons.rounded.Check
+import androidx.compose.material.icons.rounded.CloudDownload
+import androidx.compose.material.icons.rounded.FastForward
+import androidx.compose.material.icons.rounded.FastRewind
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.coroutines.launch
 import com.lostf1sh.pixelplayeross.R
 import com.lostf1sh.pixelplayeross.data.telegram.TelegramChannelInfo
 import com.lostf1sh.pixelplayeross.data.telegram.TelegramMusicService
@@ -37,6 +45,12 @@ fun TelegramPlayerSheet(
     playerViewModel: PlayerViewModel,
     telegramService: TelegramMusicService = remember { TelegramMusicService() }
 ) {
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+    val downloadingTrackIds = remember { mutableStateMapOf<String, Boolean>() }
+    val savedTrackIds = remember { mutableStateMapOf<String, Boolean>() }
+    var currentSpeed by remember { mutableFloatStateOf(1.0f) }
+
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     var selectedChannel by remember { mutableStateOf("@liqtranq_beats") }
     var customChannelInput by remember { mutableStateOf("") }
@@ -247,6 +261,70 @@ fun TelegramPlayerSheet(
 
                         Spacer(modifier = Modifier.width(8.dp))
 
+                        // Offline Save Button
+                        val isDownloading = downloadingTrackIds[track.id] == true
+                        val isSaved = savedTrackIds[track.id] == true
+
+                        Box(
+                            modifier = Modifier
+                                .size(32.dp)
+                                .background(
+                                    if (isSaved) Color(0xFF17241A) else Color(0xFF1C1B17),
+                                    RoundedCornerShape(4.dp)
+                                )
+                                .border(
+                                    1.dp,
+                                    if (isSaved) LiquidSuccessDark else Color(0xFF3A362E),
+                                    RoundedCornerShape(4.dp)
+                                )
+                                .clickable(enabled = !isDownloading && !isSaved) {
+                                    coroutineScope.launch {
+                                        downloadingTrackIds[track.id] = true
+                                        val result = telegramService.downloadTrackOffline(context, track)
+                                        result.onSuccess {
+                                            savedTrackIds[track.id] = true
+                                            Toast.makeText(
+                                                context,
+                                                "Сохранено в Music/Telegram",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }.onFailure { err ->
+                                            Toast.makeText(
+                                                context,
+                                                "Ошибка: ${err.message}",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                        downloadingTrackIds[track.id] = false
+                                    }
+                                },
+                            contentAlignment = Alignment.Center
+                        ) {
+                            if (isDownloading) {
+                                CircularProgressIndicator(
+                                    modifier = Modifier.size(16.dp),
+                                    strokeWidth = 2.dp,
+                                    color = LiquidRustDark
+                                )
+                            } else if (isSaved) {
+                                Icon(
+                                    imageVector = Icons.Rounded.Check,
+                                    contentDescription = "Saved",
+                                    tint = LiquidSuccessDark,
+                                    modifier = Modifier.size(18.dp)
+                                )
+                            } else {
+                                Icon(
+                                    imageVector = Icons.Rounded.CloudDownload,
+                                    contentDescription = "Save Offline",
+                                    tint = Color(0xFF9B9485),
+                                    modifier = Modifier.size(18.dp)
+                                )
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.width(6.dp))
+
                         // Play Button
                         Box(
                             modifier = Modifier
@@ -266,6 +344,115 @@ fun TelegramPlayerSheet(
                                 modifier = Modifier.size(18.dp)
                             )
                         }
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            // Podcast & Quick Jump Controls
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(6.dp),
+                color = Color(0xFF1A1915),
+                border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFF2C2923))
+            ) {
+                Column(
+                    modifier = Modifier.padding(10.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "PODCAST DECK // QUICK JUMP & SPEED",
+                            fontFamily = FontFamily.Monospace,
+                            fontSize = 10.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFF9B9485)
+                        )
+
+                        // Seek buttons
+                        Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                            Box(
+                                modifier = Modifier
+                                    .background(Color(0xFF24221D), RoundedCornerShape(3.dp))
+                                    .border(1.dp, Color(0xFF3A362E), RoundedCornerShape(3.dp))
+                                    .clickable {
+                                        playerViewModel.seekRelative(-10_000L)
+                                        Toast.makeText(context, "-10 сек", Toast.LENGTH_SHORT).show()
+                                    }
+                                    .padding(horizontal = 8.dp, vertical = 4.dp)
+                            ) {
+                                Text(
+                                    text = "-10s",
+                                    fontFamily = FontFamily.Monospace,
+                                    fontSize = 10.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color(0xFFE8E3D8)
+                                )
+                            }
+
+                            Box(
+                                modifier = Modifier
+                                    .background(Color(0xFF24221D), RoundedCornerShape(3.dp))
+                                    .border(1.dp, Color(0xFF3A362E), RoundedCornerShape(3.dp))
+                                    .clickable {
+                                        playerViewModel.seekRelative(30_000L)
+                                        Toast.makeText(context, "+30 сек", Toast.LENGTH_SHORT).show()
+                                    }
+                                    .padding(horizontal = 8.dp, vertical = 4.dp)
+                            ) {
+                                Text(
+                                    text = "+30s",
+                                    fontFamily = FontFamily.Monospace,
+                                    fontSize = 10.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color(0xFFE8E3D8)
+                                )
+                            }
+                        }
+                    }
+
+                    // Speed Chips Row
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        listOf(0.75f to "0.75x", 1.0f to "1.0x", 1.25f to "1.25x", 1.5f to "1.5x", 2.0f to "2.0x")
+                            .forEach { (speed, label) ->
+                                val isSelected = currentSpeed == speed
+                                Box(
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .background(
+                                            if (isSelected) LiquidRustDark else Color(0xFF141311),
+                                            RoundedCornerShape(3.dp)
+                                        )
+                                        .border(
+                                            1.dp,
+                                            if (isSelected) LiquidRustDark else Color(0xFF3A362E),
+                                            RoundedCornerShape(3.dp)
+                                        )
+                                        .clickable {
+                                            currentSpeed = speed
+                                            playerViewModel.setPlaybackSpeed(speed)
+                                            Toast.makeText(context, "Скорость: $label", Toast.LENGTH_SHORT).show()
+                                        }
+                                        .padding(vertical = 5.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        text = label,
+                                        fontFamily = FontFamily.Monospace,
+                                        fontSize = 10.sp,
+                                        fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
+                                        color = if (isSelected) Color.White else Color(0xFF9B9485)
+                                    )
+                                }
+                            }
                     }
                 }
             }

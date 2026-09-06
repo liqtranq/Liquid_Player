@@ -1,9 +1,15 @@
 package com.lostf1sh.pixelplayeross.data.telegram
 
 import android.content.Context
+import android.media.MediaScannerConnection
+import android.os.Environment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
+import timber.log.Timber
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
 import javax.inject.Inject
@@ -78,6 +84,45 @@ class TelegramMusicService @Inject constructor() {
             }
         } catch (_: Exception) {}
         null
+    }
+
+    /**
+     * Downloads an audio stream offline to Music/Telegram/ and registers it with Android MediaStore.
+     */
+    suspend fun downloadTrackOffline(context: Context, track: TelegramTrack): Result<File> = withContext(Dispatchers.IO) {
+        try {
+            val musicDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC)
+            val tgDir = File(musicDir, "Telegram").apply { if (!exists()) mkdirs() }
+            val safeArtist = track.artist.replace(Regex("[\\\\/:*?\"<>|]"), "_").trim()
+            val safeTitle = track.title.replace(Regex("[\\\\/:*?\"<>|]"), "_").trim()
+            val ext = if (track.mimeType.contains("flac")) "flac" else if (track.mimeType.contains("ogg")) "ogg" else "mp3"
+            val targetFile = File(tgDir, "$safeArtist - $safeTitle.$ext")
+
+            val url = URL(track.streamUrl)
+            val conn = url.openConnection() as HttpURLConnection
+            conn.connectTimeout = 12000
+            conn.readTimeout = 25000
+            if (conn.responseCode in 200..299) {
+                conn.inputStream.use { input ->
+                    FileOutputStream(targetFile).use { output ->
+                        input.copyTo(output)
+                    }
+                }
+
+                MediaScannerConnection.scanFile(
+                    context,
+                    arrayOf(targetFile.absolutePath),
+                    arrayOf(track.mimeType),
+                    null
+                )
+                Result.success(targetFile)
+            } else {
+                Result.failure(IOException("HTTP ${conn.responseCode} while downloading track"))
+            }
+        } catch (e: Exception) {
+            Timber.tag("TelegramMusicService").e(e, "Download failed")
+            Result.failure(e)
+        }
     }
 }
 

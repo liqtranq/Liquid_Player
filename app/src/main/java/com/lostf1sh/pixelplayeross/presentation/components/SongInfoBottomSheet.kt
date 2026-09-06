@@ -131,6 +131,7 @@ fun SongInfoBottomSheet(
 ) {
     val context = LocalContext.current
     var showEditSheet by remember { mutableStateOf(false) }
+    var showConverterSheet by remember { mutableStateOf(false) }
     var showArtistPicker by remember { mutableStateOf(false) }
     var showTonePickerDialog by remember { mutableStateOf(false) }
     var toneConfirmationTarget by remember { mutableStateOf<ToneTarget?>(null) }
@@ -684,6 +685,25 @@ fun SongInfoBottomSheet(
                                             }
                                         }
 
+                                        if (!isCloudSong) {
+                                            item {
+                                                FilledTonalButton(
+                                                    modifier = Modifier
+                                                        .fillMaxWidth()
+                                                        .heightIn(min = 66.dp),
+                                                    shape = CircleShape,
+                                                    onClick = { showConverterSheet = true }
+                                                ) {
+                                                    Icon(
+                                                        Icons.Rounded.AudioFile,
+                                                        contentDescription = null
+                                                    )
+                                                    Spacer(Modifier.width(10.dp))
+                                                    Text("Конвертировать аудио (AIMP Studio)")
+                                                }
+                                            }
+                                        }
+
                                         item {
                                             Spacer(Modifier.height(80.dp))
                                         }
@@ -874,6 +894,13 @@ fun SongInfoBottomSheet(
             showEditSheet = false
         },
     )
+
+    if (showConverterSheet) {
+        AudioConverterSheet(
+            song = song,
+            onDismiss = { showConverterSheet = false }
+        )
+    }
 
     when (val state = musicBrainzState) {
         SongInfoBottomSheetViewModel.MusicBrainzUiState.Idle,
