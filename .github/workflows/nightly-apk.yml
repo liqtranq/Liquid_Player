@@ -111,7 +111,7 @@ jobs:
             KEYSTORE_PASSWORD="$(openssl rand -hex 24)"
             keytool -genkey -v -keystore pixelplayeross-ci.jks -alias pixelplayeross-ci-key -keyalg RSA -keysize 4096 -validity 10000 \
               -storepass "$KEYSTORE_PASSWORD" -keypass "$KEYSTORE_PASSWORD" \
-              -dname "CN=PixelPlayerOSS CI Throwaway, OU=Dev, O=PixelPlayerOSS, L=World, S=World, C=US"
+              -dname "CN=Liquid Player CI Throwaway, OU=Dev, O=liqtranq, L=World, S=World, C=US"
           fi
           {
             echo "storeFile=pixelplayeross-ci.jks"
@@ -137,7 +137,7 @@ jobs:
       - name: Upload Phone nightly split APK artifacts
         uses: actions/upload-artifact@v7.0.1
         with:
-          name: PixelPlayerOSS-phone-nightly-${{ needs.changes.outputs.short-sha }}
+          name: Liquid_Player-phone-nightly-${{ needs.changes.outputs.short-sha }}
           path: |
             app/build/outputs/apk/release/app-arm64-v8a-release.apk
             app/build/outputs/apk/release/app-armeabi-v7a-release.apk

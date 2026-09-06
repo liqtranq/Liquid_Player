@@ -5,7 +5,7 @@
     <string name="do_not_show_again">Do not show again</string>
     <string name="dismiss">Dismiss</string>
     <string name="all_files_access_title">Special Permission Required</string>
-    <string name="all_files_access_description">To edit song metadata (.mp3 files), PixelPlayerOSS needs special access to all files. This allows us to modify track tags directly. Please grant this permission on the next screen to enable metadata editing.</string>
+    <string name="all_files_access_description">To edit song metadata (.mp3 files), Liquid Player needs special access to all files. This allows us to modify track tags directly. Please grant this permission on the next screen to enable metadata editing.</string>
     <string name="grant_permission_button">Grant Permission</string>
     <string name="error">Error</string>
     <string name="ok">OK</string>

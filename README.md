@@ -1,233 +1,69 @@
+<div align="center">
 
-<p align="center">
-  <img src="assets/pixelplayeross_header.png" alt="PixelPlayerOSS — open-source music player for Android"/>
-</p>
+# Liquid Player
 
-<p align="center">
-  <a href="https://github.com/PixelPlayerHQ/PixelPlayerOSS/releases/latest">
-    <img src="https://img.shields.io/github/v/release/PixelPlayerHQ/PixelPlayerOSS?include_prereleases&logo=github&style=for-the-badge&label=Latest%20Release" alt="Latest release">
-  </a>
-  <a href="https://f-droid.org/packages/com.lostf1sh.pixelplayeross/">
-    <img src="https://img.shields.io/f-droid/v/com.lostf1sh.pixelplayeross?logo=fdroid&style=for-the-badge&label=F-Droid" alt="F-Droid version">
-  </a>
-  <a href="https://github.com/PixelPlayerHQ/PixelPlayerOSS/releases">
-    <img src="https://img.shields.io/github/downloads/PixelPlayerHQ/PixelPlayerOSS/total?logo=github&style=for-the-badge" alt="Total downloads">
-  </a>
-  <a href="https://github.com/sponsors/lostf1sh">
-    <img src="https://img.shields.io/badge/Sponsor-GitHub%20Sponsors-EA4AAA?style=for-the-badge&logo=githubsponsors&logoColor=white" alt="Sponsor on GitHub Sponsors">
-  </a>
-  <img src="https://img.shields.io/badge/Android-11%2B-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android 11+">
-  <img src="https://img.shields.io/badge/License-GPLv3-blue?style=for-the-badge" alt="GPLv3 license">
-</p>
+**Музыкальный плеер для Android с расширенными возможностями.**
 
-<p align="center">
-  <img src="assets/screenshot1.jpeg" alt="PixelPlayerOSS home screen" width="205"/>
-  <img src="assets/screenshot2.jpeg" alt="PixelPlayerOSS now playing screen" width="205"/>
-  <img src="assets/screenshot3.jpeg" alt="PixelPlayerOSS library screen" width="205"/>
-  <img src="assets/screenshot4.jpeg" alt="PixelPlayerOSS lyrics screen" width="205"/>
-</p>
+Локальная музыка · Редактор тегов · Обложки · Конвертация аудио
 
-## What It Is
+[![Release](https://img.shields.io/github/v/release/liqtranq/Liquid_Player?style=flat-square&color=E05A32)](https://github.com/liqtranq/Liquid_Player/releases)
+![Android 11+](https://img.shields.io/badge/Android-11%2B-3DDC84?style=flat-square)
+[![License](https://img.shields.io/badge/License-GPL--3.0--or--later-blue?style=flat-square)](LICENSE)
 
-PixelPlayerOSS is an Android music player maintained by [@lostf1sh](https://github.com/lostf1sh). It focuses on local playback, self-hosted music libraries, expressive Material 3 UI, and user-controlled online lookups.
+[Скачать APK](https://github.com/liqtranq/Liquid_Player/releases) · [Сообщить об ошибке](https://github.com/liqtranq/Liquid_Player/issues) · [liqtranq](https://github.com/liqtranq)
 
-The app works offline by default. Optional online services are disabled until you enable them in setup or settings.
+</div>
 
-Package name: `com.lostf1sh.pixelplayeross`
+## О плеере
 
-## Why This Exists
+Liquid Player — музыкальный плеер для Android, который развивает [liqtranq](https://github.com/liqtranq). Слушайте музыку с устройства, наводите порядок в библиотеке, редактируйте теги и подбирайте обложки в одном приложении.
 
-PixelPlayerOSS keeps the player FOSS-oriented and removes integrations that are not part of that direction.
+В оформлении — тёмные поверхности, тёплые оранжевые акценты и элементы, вдохновлённые аудиотехникой. Доступны светлая тема и настройки внешнего вида.
 
-Removed integrations include Telegram, NetEase, QQ Music, Google Drive, Gemini, Cast, Wear OS, Play Store billing, Firebase, Crashlytics, and Google Play Services runtime dependencies.
+## Возможности
 
-Cloud playback is limited to self-hosted sources: Navidrome/Subsonic and Jellyfin.
+| | Что умеет плеер |
+| :--- | :--- |
+| **Музыка** | Локальное воспроизведение, очередь, плейлисты, избранное, плавные переходы и таймер сна |
+| **Библиотека** | Альбомы, исполнители, жанры, папки, поиск и статистика прослушивания |
+| **Теги и обложки** | Редактирование метаданных, заполнение из имени файла, очистка лишнего текста, поиск в Deezer и выбор изображения с устройства |
+| **Конвертация** | Экспорт в M4A / AAC или WAV / PCM 16-bit; возможности кодирования зависят от устройства |
+| **Тексты песен** | Встроенные тексты, локальные LRC-файлы и дополнительный поиск через LRCLIB |
+| **Своя медиатека в сети** | Подключение к Navidrome / Subsonic и Jellyfin |
+| **Настройки** | Темы, виджеты, резервное копирование и восстановление |
 
-## Features
+**Telegram Audio Deck пока экспериментальный:** экран показывает демонстрационные аудио и поддерживает их воспроизведение и загрузку. Подключение личного аккаунта, чтение каналов и «Избранного» ещё не реализованы в интерфейсе.
 
-| Area | Highlights |
-| --- | --- |
-| Playback | Media3 playback engine, FFmpeg support, gapless playback, crossfade, custom transitions, queue controls, shuffle, repeat, sleep timer, external file playback |
-| Library | Local scanning for MP3, FLAC, AAC, OGG, WAV, M4A, albums, artists, genres, folders, favorites, playlists, stats, metadata editing |
-| Self-hosted | Navidrome/Subsonic and Jellyfin login, sync, streaming, artwork, and app-private offline downloads |
-| Lyrics | Embedded lyrics, local `.lrc` files, lyrics import/editing, optional LRCLIB lookup |
-| Artwork | Local artwork, album-art palette extraction, optional Deezer artist image lookup |
-| Metadata | On-demand MusicBrainz matching for recording, release, and artist identifiers |
-| UI | Jetpack Compose, Material 3, dynamic color, light/dark themes, Glance widgets, animated player surfaces |
-| Backup | Preferences, playlists, favorites, lyrics, stats, and app state backup/restore |
+## Установка
 
-## Online Services
+Нужен **Android 11 или новее**. Откройте [релизы](https://github.com/liqtranq/Liquid_Player/releases), выберите версию и скачайте APK. Файлы с `debug` в названии — тестовые сборки; предварительные версии отмечены как *Pre-release*.
 
-PixelPlayerOSS separates offline playback from network lookups.
+Сборки Liquid Player публикуются в этом репозитории. Ссылка на F-Droid исходного проекта не является страницей Liquid Player.
 
-| Service | Purpose | Default |
-| --- | --- | --- |
-| Navidrome/Subsonic | Self-hosted library sync, streaming, and offline downloads | User login required |
-| Jellyfin | Self-hosted library sync, streaming, and offline downloads | User login required |
-| MusicBrainz | On-demand metadata matching and identifier enrichment | Only when requested |
-| LRCLIB | Search online lyrics when local or embedded lyrics are missing | Off |
-| Deezer | Fetch missing artist artwork and cache it locally | Off |
+## Архитектура и благодарности
 
-LRCLIB and Deezer can be enabled during first-run setup or later from `Settings > Music Management > Optional online services`. MusicBrainz searches run only when you choose the lookup action for a track.
+Liquid Player основан на [PixelPlayerOSS](https://github.com/PixelPlayerHQ/PixelPlayerOSS), который происходит от PixelPlayer. Значительная часть архитектуры и базового кода унаследована от этих проектов: Jetpack Compose и Material 3 для интерфейса, Media3 для воспроизведения, Room для библиотеки, Hilt для зависимостей и DataStore для настроек.
 
-## Requirements
+В Liquid Player развиваются собственное оформление и дополнительные инструменты для работы с музыкой. Спасибо **Theo Vilardo (@theovilardo)**, **@lostf1sh** и всем участникам исходных проектов за основу.
 
-| Requirement | Version |
-| --- | --- |
-| Android | 11 or newer, API 30+ |
-| JDK | 21 |
-| Android SDK | compile/target 37 |
+Исходное пространство имён `com.lostf1sh.pixelplayeross` сохранено для совместимости; это техническое имя пакета, а не имя автора Liquid Player.
 
-## Build From Source
+## Сборка из исходников
 
-Clone the repository:
+Требуются **JDK 21** и **Android SDK 37**. Укажите путь к SDK в `local.properties` или через `ANDROID_HOME`.
 
 ```sh
-git clone https://github.com/PixelPlayerHQ/PixelPlayerOSS.git
-cd PixelPlayerOSS
+git clone https://github.com/liqtranq/Liquid_Player.git
+cd Liquid_Player
+./gradlew :app:assembleDebug -Ppixelplayer.enableAbiSplits=false
 ```
 
-Build the debug APK:
+На Windows используйте `./gradlew.bat`. APK появится в `app/build/outputs/apk/debug/`.
 
-```sh
-JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew :app:assembleDebug
-```
+Проверки перед изменениями и публикацией описаны в [CONTRIBUTING.md](CONTRIBUTING.md) и [docs/RELEASE.md](docs/RELEASE.md).
 
-Build one universal debug APK for local installation:
+## Лицензия
 
-```sh
-JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew :app:assembleDebug -Ppixelplayer.enableAbiSplits=false
-```
+[GPL-3.0-or-later](LICENSE). Исходные уведомления об авторских правах сохранены: PixelPlayerOSS, Copyright (C) 2026 Theo Vilardo. Изменения Liquid Player — liqtranq и участники проекта.
 
-Build a universal unsigned release APK suitable for F-Droid verification:
-
-```sh
-JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew :app:assembleRelease -Ppixelplayer.enableAbiSplits=false -Ppixelplayer.disableReleaseSigning=true
-```
-
-Run unit tests:
-
-```sh
-JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew :app:testDebugUnitTest
-```
-
-Generate the baseline profile with a connected device or emulator:
-
-```sh
-JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew :baselineprofile:generateBaselineProfile
-```
-
-## Download
-
-PixelPlayerOSS is available on F-Droid:
-
-<a href="https://f-droid.org/packages/com.lostf1sh.pixelplayeross/">
-  <img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="80">
-</a>
-
-GitHub releases are available at:
-
-```text
-https://github.com/PixelPlayerHQ/PixelPlayerOSS/releases
-```
-
-Obtainium app id:
-
-```text
-com.lostf1sh.pixelplayeross
-```
-
-Public releases are planned on a regular weekly cadence when `main` passes the release checklist.
-
-F-Droid listing metadata lives in `fastlane/metadata/android/en-US`; build/release notes for F-Droid are in [docs/FDROID.md](docs/FDROID.md).
-
-> Note: F-Droid builds and signs its own APKs from source, so they may lag behind GitHub releases while the new version works through the F-Droid build cycle. F-Droid and GitHub APK signatures differ — switching between the two requires an uninstall/reinstall.
-
-### Alpha builds
-
-Every merge into `main` automatically publishes a pre-release tagged like `v0.3.0-alpha.N` on the [releases page](https://github.com/PixelPlayerHQ/PixelPlayerOSS/releases). These are cutting-edge builds for testing new changes before they reach a stable release — expect rough edges.
-
-To install one, download the APK for your device from the release assets and sideload it: `arm64-v8a` fits most modern devices, `armeabi-v7a` is for older 32-bit ones.
-
-Alpha builds are signed with a dedicated CI key, so they update over each other, but switching between alpha and a stable or F-Droid install requires an uninstall/reinstall. In Obtainium, enable "Include prereleases" to get alphas automatically.
-
-## Support
-
-If PixelPlayerOSS is useful to you, you can support ongoing development through [GitHub Sponsors](https://github.com/sponsors/lostf1sh).
-
-## Project Structure
-
-```text
-app/src/main/java/com/lostf1sh/pixelplayeross/
-- data/             Room, repositories, preferences, services, workers
-- di/               Hilt modules and qualifiers
-- presentation/     Compose screens, components, navigation, ViewModels
-- ui/               Theme and Glance widgets
-- utils/            Shared utilities
-
-baselineprofile/      Macrobenchmark and baseline profile generation
-```
-
-## Tech Stack
-
-| Area | Technology |
-| --- | --- |
-| Language | Kotlin |
-| UI | Jetpack Compose |
-| Design | Material 3 |
-| Playback | AndroidX Media3, ExoPlayer, FFmpeg |
-| Database | Room |
-| Dependency Injection | Hilt |
-| Preferences | DataStore |
-| Background Work | WorkManager |
-| Networking | Retrofit, OkHttp |
-| Images | Coil |
-| Metadata | TagLib |
-
-## Contributing
-
-Contributions are welcome. Open an issue or pull request with a focused change and include test/build results when possible.
-
-Useful local checks:
-
-```sh
-JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew :app:compileDebugKotlin
-JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew :app:lintDebug
-JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew :app:testDebugUnitTest
-```
-
-Release process: [docs/RELEASE.md](docs/RELEASE.md)
-
-F-Droid notes: [docs/FDROID.md](docs/FDROID.md)
-
-Privacy policy: [PRIVACY.md](PRIVACY.md)
-
-Security policy: [SECURITY.md](SECURITY.md)
-
-## License
-
-PixelPlayerOSS is licensed under the [GNU General Public License v3.0](LICENSE) (`SPDX-License-Identifier: GPL-3.0-or-later`).
-
-```
-PixelPlayerOSS
-Copyright (C) 2026 Theo Vilardo
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
-```
-
-Distributed APKs include third-party components under their own licenses. In particular, the optional FFmpeg decoder dependency `org.jellyfin.media3:media3-ffmpeg-decoder` is GPL-3.0; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
-
-<p align="center">
-  Maintained by <a href="https://github.com/lostf1sh">lostf1sh</a>
-</p>
+[Компоненты и благодарности](THIRD_PARTY_NOTICES.md) · [Конфиденциальность](PRIVACY.md) · [Безопасность](SECURITY.md)

@@ -1,15 +1,14 @@
-# Contributing to PixelPlayerOSS
+# Contributing to Liquid Player
 
-Thanks for your interest in improving PixelPlayerOSS! This guide covers the
-conventions that aren't obvious from the code alone. For a deeper architectural
-overview, see [CLAUDE.md](CLAUDE.md) (written for AI assistants but accurate for
-humans too).
+Thanks for your interest in improving Liquid Player by liqtranq. This guide covers
+the conventions inherited from PixelPlayerOSS. See [README.md](README.md) for
+the project overview and upstream credits.
 
 ## Getting started
 
 ```sh
-git clone https://github.com/PixelPlayerHQ/PixelPlayerOSS.git
-cd PixelPlayerOSS
+git clone https://github.com/liqtranq/Liquid_Player.git
+cd Liquid_Player
 
 # Universal debug APK for local installation
 JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew :app:assembleDebug -Ppixelplayer.enableAbiSplits=false

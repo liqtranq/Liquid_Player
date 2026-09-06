@@ -1,14 +1,14 @@
 # Release Checklist
 
-PixelPlayerOSS releases are shipped from `main` after the release candidate passes local checks and a basic device smoke test.
+Liquid Player releases are shipped from `main` after the release candidate passes local checks and a basic device smoke test.
 
 ## Versioning
 
 Version values live in `gradle.properties`:
 
 ```properties
-APP_VERSION_NAME=0.1.0
-APP_VERSION_CODE=1
+APP_VERSION_NAME=0.4.1
+APP_VERSION_CODE=5
 ```
 
 For every public release:
@@ -16,7 +16,7 @@ For every public release:
 1. Update `APP_VERSION_NAME`.
 2. Increment `APP_VERSION_CODE`.
 3. Move the relevant `CHANGELOG.md` entries from `Unreleased` to the release version.
-4. Tag the release as `v<APP_VERSION_NAME>`, for example `v0.1.0`.
+4. Tag the release as `v<APP_VERSION_NAME>`, for example `v0.4.1`.
 
 ## Required Local Checks
 

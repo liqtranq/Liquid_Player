@@ -1,23 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="about_contributions_format">%1$d katkı</string>
-    <string name="about_link_fdroid_subtitle">F-Droid kataloğunda mevcut</string>
-    <string name="about_link_fdroid_title">F-Droid</string>
     <string name="about_link_source_title">Kaynak kodu</string>
-    <string name="about_maintainer_subtitle">FOSS ve orijinal/FOSS olmayan sürümlerin bakımı.</string>
-    <string name="about_maintainer_title">Bakımcılar</string>
-    <string name="about_project_subtitle">Kaynak kodu, sürümler ve topluluk bağlantıları.</string>
     <string name="about_project_title">Proje</string>
-    <string name="about_signal_community_first">Önce topluluk</string>
-    <string name="about_signal_material3">Etkileyici Material 3</string>
     <string name="about_signal_open_source">Açık kaynak</string>
-    <string name="about_support_body">FOSS sürümünün bakımının yapılmasına, gözden geçirilmesine ve gerçek Android cihazlarda test edilmesine destek olun.</string>
-    <string name="about_support_chip_ci">CI ve sürümler</string>
-    <string name="about_support_chip_foss">FOSS bakımı</string>
-    <string name="about_support_chip_streaming">Kendi barındırdığınız müzik</string>
-    <string name="about_support_cta">GitHub\'da sponsor ol</string>
-    <string name="about_support_eyebrow">GitHub Sponsors</string>
-    <string name="about_tagline">Yerel öncelikli müzik, kendi barındırdığınız akış ve Material 3 işçiliği tek bir FOSS oynatıcıda.</string>
     <string name="about_version_format">Sürüm v%1$s</string>
     <string name="accounts_unable_open_screen">Bu ekran şu anda açılamıyor.</string>
     <string name="action_copy">Kopyala</string>

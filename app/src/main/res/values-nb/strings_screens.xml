@@ -1,23 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="about_contributions_format">%1$d bidrag.</string>
-    <string name="about_link_fdroid_subtitle">Tilgjengelig i F-Droid-katalogen</string>
-    <string name="about_link_fdroid_title">F-Droid</string>
     <string name="about_link_source_title">Kildekode</string>
-    <string name="about_maintainer_subtitle">Vedlikehold av FOSS-utgaven og den opprinnelige, ikke-FOSS-utgaven.</string>
-    <string name="about_maintainer_title">Vedlikeholdere</string>
-    <string name="about_project_subtitle">Kildekode, utgivelser og veier inn i fellesskapet.</string>
     <string name="about_project_title">Prosjekt</string>
-    <string name="about_signal_community_first">Samfunnet først</string>
-    <string name="about_signal_material3">Material 3 ekspressiv</string>
     <string name="about_signal_open_source">Åpen kildekode</string>
-    <string name="about_support_body">Bidra til at FOSS-utgaven blir vedlikeholdt, gjennomgått og testet på ekte Android-enheter.</string>
-    <string name="about_support_chip_ci">CI og utgivelser</string>
-    <string name="about_support_chip_foss">FOSS-vedlikehold</string>
-    <string name="about_support_chip_streaming">Selvhostet musikk</string>
-    <string name="about_support_cta">Støtt på GitHub</string>
-    <string name="about_support_eyebrow">GitHub Sponsors</string>
-    <string name="about_tagline">Lokal musikk først, selvhostet strømming og Material 3-håndverk i én FOSS-spiller.</string>
     <string name="about_version_format">Versjon v%1$s</string>
     <string name="accounts_unable_open_screen">Kan ikke åpne denne skjermen akkurat nå.</string>
     <string name="action_copy">Kopier</string>

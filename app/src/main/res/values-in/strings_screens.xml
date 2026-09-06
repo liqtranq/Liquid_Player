@@ -1,23 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="about_contributions_format">%1$d kontrib.</string>
-    <string name="about_link_fdroid_subtitle">Tersedia di katalog F-Droid</string>
-    <string name="about_link_fdroid_title">F-Droid</string>
     <string name="about_link_source_title">Kode sumber</string>
-    <string name="about_maintainer_subtitle">Pemeliharaan edisi FOSS dan edisi asli/non-FOSS.</string>
-    <string name="about_maintainer_title">Pemelihara</string>
-    <string name="about_project_subtitle">Kode sumber, rilis, dan pintu masuk komunitas.</string>
     <string name="about_project_title">Proyek</string>
-    <string name="about_signal_community_first">Community-first</string>
-    <string name="about_signal_material3">Material 3 expressive</string>
     <string name="about_signal_open_source">Open source</string>
-    <string name="about_support_body">Bantu agar edisi FOSS tetap dipelihara, ditinjau, dan diuji di perangkat Android sungguhan.</string>
-    <string name="about_support_chip_ci">CI dan rilis</string>
-    <string name="about_support_chip_foss">Pemeliharaan FOSS</string>
-    <string name="about_support_chip_streaming">Musik mandiri</string>
-    <string name="about_support_cta">Dukung di GitHub</string>
-    <string name="about_support_eyebrow">GitHub Sponsors</string>
-    <string name="about_tagline">Musik lokal lebih dulu, streaming mandiri, dan sentuhan Material 3 dalam satu pemutar FOSS.</string>
     <string name="about_version_format">Versi v%1$s</string>
     <string name="accounts_unable_open_screen">Tidak dapat membuka layar ini sekarang.</string>
     <string name="action_copy">Salin</string>

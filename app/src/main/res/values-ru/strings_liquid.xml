@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="liquid_changelog_041">
+        <item>Короткое описание в About, актуальные названия и ссылки на GitHub.</item>
+        <item>Liquid Player от liqtranq и отдельная благодарность авторам PixelPlayer.</item>
+        <item>Исправлены версия приложения и настройки сборок GitHub.</item>
+    </string-array>
+    <string-array name="liquid_changelog_040">
+        <item>Редактирование тегов, заполнение из имени файла, очистка текста и выбор обложек.</item>
+        <item>Конвертация аудио в M4A/AAC или WAV/PCM 16-bit.</item>
+        <item>Загрузка демонстрационных аудио и управление подкастами в экспериментальном Telegram Audio Deck.</item>
+    </string-array>
+    <string-array name="liquid_changelog_030">
+        <item>Оформление LIQTRANQ и анимации отклика.</item>
+        <item>Обложки из папок и кеширование сетевых обложек.</item>
+        <item>Экспериментальный Telegram Audio Deck с демонстрационными аудио.</item>
+    </string-array>
+</resources>

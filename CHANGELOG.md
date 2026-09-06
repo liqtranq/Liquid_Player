@@ -1,8 +1,38 @@
 # Changelog
 
-All notable changes to PixelPlayerOSS will be documented in this file.
+Changes to Liquid Player by liqtranq. Earlier PixelPlayerOSS history is preserved below.
 
-## [Unreleased]
+## [0.4.1] - 2026-09-06
+
+### Changed
+- Replaced the inherited repository overview with a concise Liquid Player introduction and feature list.
+- Simplified About, credited liqtranq as the developer, and separated PixelPlayer/PixelPlayerOSS architecture credits.
+- Updated app labels, source and release links; removed the unrelated F-Droid and sponsorship buttons.
+- Documented the current demo status of Telegram Audio Deck.
+
+### Fixed
+- Corrected the application version after the 0.4.0 release.
+- Fixed GitHub issue template configuration and moved APK workflows to standard GitHub runners.
+- Allowed the About description to wrap fully on narrow screens.
+
+## [0.4.0] - 2026-09-06
+
+### Added
+- Tag editing tools: filename parsing, tag cleanup, Deezer metadata and cover search, and local cover selection.
+- Audio conversion to M4A/AAC and WAV/PCM 16-bit.
+- Offline sample downloads and podcast controls in the experimental Telegram Audio Deck.
+
+## [Liquid Player 0.3.0] - 2026-09-06
+
+### Added
+- LIQTRANQ visual style, tactile animations, folder artwork resolution, and cloud artwork caching.
+- Experimental Telegram Audio Deck with sample streams.
+
+---
+
+The entries below are inherited PixelPlayerOSS history, including changes incorporated before the Liquid Player fork.
+
+## [Upstream unreleased]
 
 ### Fixed
 - Jellyfin playlists no longer go missing on Jellyfin 10.10 and newer, where playlists can hold mixed content and audio playlists are often reported without a media type.

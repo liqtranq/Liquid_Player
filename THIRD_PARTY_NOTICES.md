@@ -1,6 +1,8 @@
 # Third-Party Notices
 
-PixelPlayerOSS is licensed under the GNU General Public License v3.0 (GPL-3.0). The app also includes third-party libraries and font assets. This file records source and license evidence useful for app-store and F-Droid review.
+Liquid Player is based on [PixelPlayerOSS](https://github.com/PixelPlayerHQ/PixelPlayerOSS), derived from PixelPlayer by Theo Vilardo. Thanks to @lostf1sh and all upstream contributors. Original copyright notices remain in place; Liquid Player changes are maintained by liqtranq.
+
+Liquid Player is licensed under the GNU General Public License v3.0 (GPL-3.0). The app also includes third-party libraries and font assets. This file records source and license evidence useful for app-store and F-Droid review.
 
 ## Bundled Font Assets
 

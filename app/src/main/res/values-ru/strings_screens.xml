@@ -1,23 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="about_contributions_format">%1$d вклад.</string>
-    <string name="about_link_fdroid_subtitle">Доступно в каталоге F-Droid</string>
-    <string name="about_link_fdroid_title">F-Droid</string>
     <string name="about_link_source_title">Исходный код</string>
-    <string name="about_maintainer_subtitle">Сопровождение FOSS-версии и оригинальной (не-FOSS) версии.</string>
-    <string name="about_maintainer_title">Сопровождающие</string>
-    <string name="about_project_subtitle">Исходный код, выпуски и точки входа в сообщество.</string>
     <string name="about_project_title">Проект</string>
-    <string name="about_signal_community_first">Ориентирован на сообщество</string>
-    <string name="about_signal_material3">Material 3 Expressive</string>
     <string name="about_signal_open_source">Открытый исходный код</string>
-    <string name="about_support_body">Помогите поддерживать, проверять и тестировать FOSS-версию на реальных Android-устройствах.</string>
-    <string name="about_support_chip_ci">CI и выпуски</string>
-    <string name="about_support_chip_foss">Сопровождение FOSS</string>
-    <string name="about_support_chip_streaming">Музыка на своём сервере</string>
-    <string name="about_support_cta">Поддержать на GitHub</string>
-    <string name="about_support_eyebrow">GitHub Sponsors</string>
-    <string name="about_tagline">Локальная музыка, стриминг со своего сервера и Material 3 в одном FOSS-плеере.</string>
     <string name="about_version_format">Версия v%1$s</string>
     <string name="accounts_unable_open_screen">Сейчас невозможно открыть этот экран.</string>
     <string name="action_copy">Копировать</string>
@@ -226,4 +212,19 @@
     <string name="word_delimiter_toast_invalid">Уже существует или недопустим</string>
     <string name="word_delimiter_toast_reset">Словесные разделители сброшены</string>
     <string name="word_delimiters_screen_title">Словесные разделители</string>
+    <string name="about_app_name">Liquid Player</string>
+    <string name="about_tagline">Музыкальный плеер для Android с расширенными возможностями.</string>
+    <string name="about_maintainer_title">Разработчик</string>
+    <string name="about_maintainer_subtitle">Liquid Player от liqtranq.</string>
+    <string name="about_project_subtitle">Исходный код и загрузки.</string>
+    <string name="about_link_source_subtitle">github.com/liqtranq/Liquid_Player</string>
+    <string name="about_link_releases_title">Версии приложения</string>
+    <string name="about_link_releases_subtitle">Скачать Liquid Player с GitHub</string>
+    <string name="about_developer_role">Разработчик Liquid Player</string>
+    <string name="about_developer_detail">Оформление и дополнительные инструменты для музыки.</string>
+    <string name="about_signal_local">Локальная музыка</string>
+    <string name="about_signal_customizable">Настройка под себя</string>
+    <string name="about_origins_title">Архитектура и благодарности</string>
+    <string name="about_origins_body">Liquid Player основан на PixelPlayerOSS и наследует значительную часть архитектуры и базового кода PixelPlayer. Спасибо Theo Vilardo, @lostf1sh и участникам исходных проектов. Проект развивается под лицензией GPL-3.0-or-later.</string>
+    <string name="about_origins_link">PixelPlayerOSS на GitHub</string>
 </resources>

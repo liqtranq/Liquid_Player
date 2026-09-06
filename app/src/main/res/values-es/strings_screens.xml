@@ -1,23 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="about_contributions_format">%1$d contrib.</string>
-    <string name="about_link_fdroid_subtitle">Disponible en el catálogo de F-Droid</string>
-    <string name="about_link_fdroid_title">F-Droid</string>
     <string name="about_link_source_title">Código fuente</string>
-    <string name="about_maintainer_subtitle">Mantenimiento de la edición FOSS y de la original/no FOSS.</string>
-    <string name="about_maintainer_title">Responsables</string>
-    <string name="about_project_subtitle">Código, versiones y puntos de entrada a la comunidad.</string>
     <string name="about_project_title">Proyecto</string>
-    <string name="about_signal_community_first">Comunidad primero</string>
-    <string name="about_signal_material3">Material 3 expresivo</string>
     <string name="about_signal_open_source">Código abierto</string>
-    <string name="about_support_body">Ayuda a mantener, revisar y probar la edición FOSS en dispositivos Android reales.</string>
-    <string name="about_support_chip_ci">CI y versiones</string>
-    <string name="about_support_chip_foss">Mantenimiento FOSS</string>
-    <string name="about_support_chip_streaming">Música autoalojada</string>
-    <string name="about_support_cta">Patrocinar en GitHub</string>
-    <string name="about_support_eyebrow">GitHub Sponsors</string>
-    <string name="about_tagline">Música local primero, streaming autoalojado y diseño Material 3 en un solo reproductor FOSS.</string>
     <string name="about_version_format">Versión v%1$s</string>
     <string name="accounts_unable_open_screen">No se puede abrir esta pantalla ahora.</string>
     <string name="action_copy">Copiar</string>
