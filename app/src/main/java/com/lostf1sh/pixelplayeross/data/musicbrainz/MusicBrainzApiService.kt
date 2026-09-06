@@ -37,8 +37,8 @@ class MusicBrainzApiService @Inject constructor(
                 chain.request().newBuilder()
                     .header(
                         "User-Agent",
-                        "LiquidPlayer/${BuildConfig.VERSION_NAME} " +
-                            "(https://github.com/liqtranq/Liquid_Player)"
+                        "liquid-player/${BuildConfig.VERSION_NAME} " +
+                            "(https://github.com/liqtranq/liquid-player)"
                     )
                     .header("Accept", "application/json")
                     .build()

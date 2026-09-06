@@ -1,6 +1,6 @@
 # Release Checklist
 
-Liquid Player releases are shipped from `main` after the release candidate passes local checks and a basic device smoke test.
+liquid-player releases are shipped from `main` after the release candidate passes local checks and a basic device smoke test.
 
 ## Versioning
 

@@ -1,6 +1,6 @@
 # Changelog
 
-Changes to Liquid Player. Earlier PixelPlayerOSS history is preserved below.
+Changes to liquid-player. Earlier PixelPlayerOSS history is preserved below.
 
 ## [0.4.2] - 2026-09-06
 
@@ -20,7 +20,7 @@ Changes to Liquid Player. Earlier PixelPlayerOSS history is preserved below.
 ## [0.4.1] - 2026-09-06
 
 ### Changed
-- Replaced the inherited repository overview with a concise Liquid Player introduction and feature list.
+- Replaced the inherited repository overview with a concise liquid-player introduction and feature list.
 - Simplified About and separated PixelPlayer/PixelPlayerOSS architecture credits.
 - Updated app labels, source and release links; removed the unrelated F-Droid and sponsorship buttons.
 - Documented the current demo status of Telegram Audio Deck.
@@ -39,7 +39,7 @@ Changes to Liquid Player. Earlier PixelPlayerOSS history is preserved below.
 - Audio conversion to M4A/AAC and WAV/PCM 16-bit.
 - Offline sample downloads and podcast controls in the experimental Telegram Audio Deck.
 
-## [Liquid Player 0.3.0] - 2026-09-06
+## [liquid-player 0.3.0] - 2026-09-06
 
 ### Added
 - LIQTRANQ visual style, tactile animations, folder artwork resolution, and cloud artwork caching.
@@ -47,7 +47,7 @@ Changes to Liquid Player. Earlier PixelPlayerOSS history is preserved below.
 
 ---
 
-The entries below are inherited PixelPlayerOSS history, including changes incorporated before the Liquid Player fork.
+The entries below are inherited PixelPlayerOSS history, including changes incorporated before the liquid-player fork.
 
 ## [Upstream unreleased]
 

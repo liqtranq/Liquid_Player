@@ -28,6 +28,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "PixelPlayerOSS"
+rootProject.name = "liquid-player"
 include(":app")
 include(":baselineprofile")

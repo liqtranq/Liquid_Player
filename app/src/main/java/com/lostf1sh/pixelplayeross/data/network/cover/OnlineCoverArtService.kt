@@ -90,7 +90,7 @@ object OnlineCoverArtService {
             val requestUrl = "https://api.deezer.com/search/album?q=$encodedQuery&limit=1"
             val request = Request.Builder()
                 .url(requestUrl)
-                .header("User-Agent", "LiquidPlayer/1.0 (Android)")
+                .header("User-Agent", "liquid-player/1.0 (Android)")
                 .build()
 
             httpClient.newCall(request).execute().use { response ->
@@ -124,7 +124,7 @@ object OnlineCoverArtService {
             val requestUrl = "https://api.deezer.com/search?q=$encodedQuery&limit=1"
             val request = Request.Builder()
                 .url(requestUrl)
-                .header("User-Agent", "LiquidPlayer/1.0 (Android)")
+                .header("User-Agent", "liquid-player/1.0 (Android)")
                 .build()
 
             httpClient.newCall(request).execute().use { response ->
@@ -158,7 +158,7 @@ object OnlineCoverArtService {
         return try {
             val request = Request.Builder()
                 .url(imageUrl)
-                .header("User-Agent", "LiquidPlayer/1.0 (Android)")
+                .header("User-Agent", "liquid-player/1.0 (Android)")
                 .build()
 
             httpClient.newCall(request).execute().use { response ->

@@ -125,7 +125,7 @@ object AutoTagUtils {
             val url = "https://api.deezer.com/search?q=$encoded&limit=5"
             val request = Request.Builder()
                 .url(url)
-                .header("User-Agent", "LiquidPlayer/1.0 (Android)")
+                .header("User-Agent", "liquid-player/1.0 (Android)")
                 .build()
 
             httpClient.newCall(request).execute().use { response ->
@@ -181,7 +181,7 @@ object AutoTagUtils {
                 val q = Uri.encode("$artist $albumOrTitle")
                 val request = Request.Builder()
                     .url("https://api.deezer.com/search/album?q=$q&limit=4")
-                    .header("User-Agent", "LiquidPlayer/1.0 (Android)")
+                    .header("User-Agent", "liquid-player/1.0 (Android)")
                     .build()
 
                 httpClient.newCall(request).execute().use { response ->
@@ -209,7 +209,7 @@ object AutoTagUtils {
                 val q = Uri.encode(if (artist.isNotBlank()) "$artist $albumOrTitle" else albumOrTitle)
                 val request = Request.Builder()
                     .url("https://api.deezer.com/search?q=$q&limit=6")
-                    .header("User-Agent", "LiquidPlayer/1.0 (Android)")
+                    .header("User-Agent", "liquid-player/1.0 (Android)")
                     .build()
 
                 httpClient.newCall(request).execute().use { response ->
@@ -242,7 +242,7 @@ object AutoTagUtils {
         return try {
             val request = Request.Builder()
                 .url(url)
-                .header("User-Agent", "LiquidPlayer/1.0 (Android)")
+                .header("User-Agent", "liquid-player/1.0 (Android)")
                 .build()
             httpClient.newCall(request).execute().use { response ->
                 if (response.isSuccessful) {

@@ -1,6 +1,6 @@
 # F-Droid (upstream reference)
 
-> This document and `metadata/com.lostf1sh.pixelplayeross.yml` are inherited reference material for PixelPlayerOSS. They do not describe a Liquid Player F-Droid listing. Download Liquid Player from [liqtranq/Liquid_Player releases](https://github.com/liqtranq/Liquid_Player/releases).
+> This document and `metadata/com.lostf1sh.pixelplayeross.yml` are inherited reference material for PixelPlayerOSS. They do not describe a liquid-player F-Droid listing. Download liquid-player from [liqtranq/liquid-player releases](https://github.com/liqtranq/liquid-player/releases).
 
 PixelPlayerOSS is published on F-Droid:
 
@@ -9,13 +9,13 @@ https://f-droid.org/packages/com.lostf1sh.pixelplayeross/
 ```
 
 The upstream listing uses its own Fastlane metadata. In this fork,
-`fastlane/metadata/android/en-US` contains Liquid Player copy and inherited image
+`fastlane/metadata/android/en-US` contains liquid-player copy and inherited image
 assets; it is not a submitted store listing.
 
 The official build recipe lives in the `fdroiddata` repository:
 `https://gitlab.com/fdroid/fdroiddata/-/blob/master/metadata/com.lostf1sh.pixelplayeross.yml`.
 A reference copy is mirrored at `metadata/com.lostf1sh.pixelplayeross.yml` in this
-repository for historical reference. It must not be used to publish Liquid Player
+repository for historical reference. It must not be used to publish liquid-player
 as PixelPlayerOSS.
 
 ## How Updates Reach F-Droid

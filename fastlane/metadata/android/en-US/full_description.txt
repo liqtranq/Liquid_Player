@@ -1,9 +1,9 @@
-Liquid Player is an Android music player with advanced features.
+liquid-player is an Android music player with advanced features.
 
 Listen to local music, organize albums and playlists, edit tags, choose artwork, and convert audio to M4A/AAC or WAV. Connect your own Navidrome/Subsonic or Jellyfin library, use local lyrics, and customize the player with themes and widgets.
 
 Telegram Audio Deck is experimental and currently plays downloadable sample audio. Account login, channel browsing, and Saved Messages access are not available in the current interface.
 
-Liquid Player is based on PixelPlayerOSS and inherits much of the architecture and core code of PixelPlayer. Thanks to Theo Vilardo, lostf1sh, and all upstream contributors. Licensed under GPL-3.0-or-later.
+liquid-player is based on PixelPlayerOSS and inherits much of the architecture and core code of PixelPlayer. Thanks to Theo Vilardo, lostf1sh, and all upstream contributors. Licensed under GPL-3.0-or-later.
 
-Source and downloads: https://github.com/liqtranq/Liquid_Player
+Source and downloads: https://github.com/liqtranq/liquid-player

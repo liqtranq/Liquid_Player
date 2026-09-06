@@ -1,6 +1,6 @@
 # Privacy Policy
 
-Liquid Player is local-first and does not include analytics, advertising SDKs, Firebase, Crashlytics, or Google Play Services runtime dependencies.
+liquid-player is local-first and does not include analytics, advertising SDKs, Firebase, Crashlytics, or Google Play Services runtime dependencies.
 
 ## Data Stored On Device
 
@@ -21,7 +21,7 @@ Server credentials and preferences are stored locally. The app does not sell or 
 
 ## Files And Media
 
-Liquid Player requests media/file permissions to scan and play local music, read artwork, edit metadata, and export/import user backups. Optional Navidrome/Subsonic and Jellyfin downloads are stored in the app's private files area for offline playback and are excluded from Android cloud backup and device transfer.
+liquid-player requests media/file permissions to scan and play local music, read artwork, edit metadata, and export/import user backups. Optional Navidrome/Subsonic and Jellyfin downloads are stored in the app's private files area for offline playback and are excluded from Android cloud backup and device transfer.
 
 ## Crash Reports
 

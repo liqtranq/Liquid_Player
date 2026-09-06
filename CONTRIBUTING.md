@@ -1,14 +1,14 @@
-# Contributing to Liquid Player
+# Contributing to liquid-player
 
-Thanks for your interest in improving Liquid Player. This guide covers
+Thanks for your interest in improving liquid-player. This guide covers
 the conventions inherited from PixelPlayerOSS. See [README.md](README.md) for
 the project overview and upstream credits.
 
 ## Getting started
 
 ```sh
-git clone https://github.com/liqtranq/Liquid_Player.git
-cd Liquid_Player
+git clone https://github.com/liqtranq/liquid-player.git
+cd liquid-player
 
 # Universal debug APK for local installation
 JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew :app:assembleDebug -Ppixelplayer.enableAbiSplits=false

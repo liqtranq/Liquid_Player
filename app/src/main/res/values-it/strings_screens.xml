@@ -215,10 +215,10 @@
     <string name="about_tagline">Un lettore musicale per Android con funzioni avanzate.</string>
     <string name="about_project_subtitle">Codice sorgente e download.</string>
     <string name="about_link_releases_title">Versioni</string>
-    <string name="about_link_releases_subtitle">Scarica Liquid Player da GitHub</string>
+    <string name="about_link_releases_subtitle">Scarica liquid-player da GitHub</string>
     <string name="about_signal_local">Musica locale</string>
     <string name="about_signal_customizable">Personalizzabile</string>
     <string name="about_origins_title">Architettura e ringraziamenti</string>
-    <string name="about_origins_body">Liquid Player si basa su PixelPlayerOSS e ne eredita gran parte dell’architettura e del codice di base di PixelPlayer. Grazie a Theo Vilardo, @lostf1sh e ai collaboratori dei progetti originali. Licenza: GPL-3.0-or-later.</string>
+    <string name="about_origins_body">liquid-player si basa su PixelPlayerOSS e ne eredita gran parte dell’architettura e del codice di base di PixelPlayer. Grazie a Theo Vilardo, @lostf1sh e ai collaboratori dei progetti originali. Licenza: GPL-3.0-or-later.</string>
     <string name="about_origins_link">PixelPlayerOSS su GitHub</string>
 </resources>

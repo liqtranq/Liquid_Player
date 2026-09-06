@@ -1,4 +1,4 @@
-Simpler About screen and Liquid Player branding.
+Simpler About screen and liquid-player branding.
 Updated source and download links, with separate PixelPlayer architecture credits.
 Corrected the app version and GitHub build configuration.
 Telegram Audio Deck is documented as an experimental demo.

@@ -215,10 +215,10 @@
     <string name="about_tagline">Музыкальный плеер для Android с расширенными возможностями.</string>
     <string name="about_project_subtitle">Исходный код и загрузки.</string>
     <string name="about_link_releases_title">Версии приложения</string>
-    <string name="about_link_releases_subtitle">Скачать Liquid Player с GitHub</string>
+    <string name="about_link_releases_subtitle">Скачать liquid-player с GitHub</string>
     <string name="about_signal_local">Локальная музыка</string>
     <string name="about_signal_customizable">Настройка под себя</string>
     <string name="about_origins_title">Архитектура и благодарности</string>
-    <string name="about_origins_body">Liquid Player основан на PixelPlayerOSS и наследует значительную часть архитектуры и базового кода PixelPlayer. Спасибо Theo Vilardo, @lostf1sh и участникам исходных проектов. Проект развивается под лицензией GPL-3.0-or-later.</string>
+    <string name="about_origins_body">liquid-player основан на PixelPlayerOSS и наследует значительную часть архитектуры и базового кода PixelPlayer. Спасибо Theo Vilardo, @lostf1sh и участникам исходных проектов. Проект развивается под лицензией GPL-3.0-or-later.</string>
     <string name="about_origins_link">PixelPlayerOSS на GitHub</string>
 </resources>

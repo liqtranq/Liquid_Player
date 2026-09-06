@@ -92,7 +92,7 @@ fun ChangelogBottomSheet(
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
-    val changelogUrl = "https://github.com/liqtranq/Liquid_Player/blob/main/CHANGELOG.md"
+    val changelogUrl = "https://github.com/liqtranq/liquid-player/blob/main/CHANGELOG.md"
     val changelog = changelogVersions()
 
     val fabCornerRadius = 16.dp

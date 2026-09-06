@@ -215,10 +215,10 @@
     <string name="about_tagline">고급 기능을 갖춘 Android 음악 플레이어입니다.</string>
     <string name="about_project_subtitle">소스 코드 및 다운로드.</string>
     <string name="about_link_releases_title">출시 버전</string>
-    <string name="about_link_releases_subtitle">GitHub에서 Liquid Player 다운로드</string>
+    <string name="about_link_releases_subtitle">GitHub에서 liquid-player 다운로드</string>
     <string name="about_signal_local">로컬 음악</string>
     <string name="about_signal_customizable">맞춤 설정</string>
     <string name="about_origins_title">아키텍처 및 감사의 말</string>
-    <string name="about_origins_body">Liquid Player는 PixelPlayerOSS를 기반으로 하며 PixelPlayer의 아키텍처와 핵심 코드 상당 부분을 계승합니다. Theo Vilardo, @lostf1sh 및 원본 프로젝트 기여자 여러분께 감사드립니다. 라이선스: GPL-3.0-or-later.</string>
+    <string name="about_origins_body">liquid-player는 PixelPlayerOSS를 기반으로 하며 PixelPlayer의 아키텍처와 핵심 코드 상당 부분을 계승합니다. Theo Vilardo, @lostf1sh 및 원본 프로젝트 기여자 여러분께 감사드립니다. 라이선스: GPL-3.0-or-later.</string>
     <string name="about_origins_link">GitHub의 PixelPlayerOSS</string>
 </resources>

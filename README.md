@@ -1,22 +1,22 @@
 <div align="center">
 
-# Liquid Player
+# liquid-player
 
 **Музыкальный плеер для Android с расширенными возможностями.**
 
 Локальная музыка · Редактор тегов · Обложки · Конвертация аудио
 
-[![Release](https://img.shields.io/github/v/release/liqtranq/Liquid_Player?style=flat-square&color=E05A32)](https://github.com/liqtranq/Liquid_Player/releases)
+[![Release](https://img.shields.io/github/v/release/liqtranq/liquid-player?style=flat-square&color=E05A32)](https://github.com/liqtranq/liquid-player/releases)
 ![Android 11+](https://img.shields.io/badge/Android-11%2B-3DDC84?style=flat-square)
 [![License](https://img.shields.io/badge/License-GPL--3.0--or--later-blue?style=flat-square)](LICENSE)
 
-[Скачать APK](https://github.com/liqtranq/Liquid_Player/releases) · [Сообщить об ошибке](https://github.com/liqtranq/Liquid_Player/issues)
+[Скачать APK](https://github.com/liqtranq/liquid-player/releases) · [Сообщить об ошибке](https://github.com/liqtranq/liquid-player/issues)
 
 </div>
 
 ## О плеере
 
-Liquid Player — музыкальный плеер для Android с расширенными возможностями. Слушайте музыку с устройства, наводите порядок в библиотеке, редактируйте теги и подбирайте обложки в одном приложении.
+liquid-player — музыкальный плеер для Android с расширенными возможностями. Слушайте музыку с устройства, наводите порядок в библиотеке, редактируйте теги и подбирайте обложки в одном приложении.
 
 В оформлении — тёмные поверхности, тёплые оранжевые акценты и элементы, вдохновлённые аудиотехникой. Доступны светлая тема и настройки внешнего вида.
 
@@ -42,25 +42,25 @@ Liquid Player — музыкальный плеер для Android с расши
 
 ## Установка
 
-Нужен **Android 11 или новее**. Откройте [релизы](https://github.com/liqtranq/Liquid_Player/releases), выберите версию и скачайте APK. Файлы с `debug` в названии — тестовые сборки; предварительные версии отмечены как *Pre-release*.
+Нужен **Android 11 или новее**. Откройте [релизы](https://github.com/liqtranq/liquid-player/releases), выберите версию и скачайте APK. Файлы с `debug` в названии — тестовые сборки; предварительные версии отмечены как *Pre-release*.
 
-Сборки Liquid Player публикуются в этом репозитории. Ссылка на F-Droid исходного проекта не является страницей Liquid Player.
+Сборки liquid-player публикуются в этом репозитории. Ссылка на F-Droid исходного проекта не является страницей liquid-player.
 
 ## Архитектура и благодарности
 
-Liquid Player основан на [PixelPlayerOSS](https://github.com/PixelPlayerHQ/PixelPlayerOSS), который происходит от PixelPlayer. Значительная часть архитектуры и базового кода унаследована от этих проектов: Jetpack Compose и Material 3 для интерфейса, Media3 для воспроизведения, Room для библиотеки, Hilt для зависимостей и DataStore для настроек.
+liquid-player основан на [PixelPlayerOSS](https://github.com/PixelPlayerHQ/PixelPlayerOSS), который происходит от PixelPlayer. Значительная часть архитектуры и базового кода унаследована от этих проектов: Jetpack Compose и Material 3 для интерфейса, Media3 для воспроизведения, Room для библиотеки, Hilt для зависимостей и DataStore для настроек.
 
-В Liquid Player развиваются собственное оформление и дополнительные инструменты для работы с музыкой. Спасибо **Theo Vilardo (@theovilardo)**, **@lostf1sh** и всем участникам исходных проектов за основу.
+В liquid-player развиваются собственное оформление и дополнительные инструменты для работы с музыкой. Спасибо **Theo Vilardo (@theovilardo)**, **@lostf1sh** и всем участникам исходных проектов за основу.
 
-Исходное пространство имён `com.lostf1sh.pixelplayeross` сохранено для совместимости; это техническое имя пакета, а не имя автора Liquid Player.
+Исходное пространство имён `com.lostf1sh.pixelplayeross` сохранено для совместимости; это техническое имя пакета, а не имя автора liquid-player.
 
 ## Сборка из исходников
 
 Требуются **JDK 21** и **Android SDK 37**. Укажите путь к SDK в `local.properties` или через `ANDROID_HOME`.
 
 ```sh
-git clone https://github.com/liqtranq/Liquid_Player.git
-cd Liquid_Player
+git clone https://github.com/liqtranq/liquid-player.git
+cd liquid-player
 ./gradlew :app:assembleDebug -Ppixelplayer.enableAbiSplits=false
 ```
 

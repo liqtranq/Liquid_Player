@@ -88,7 +88,7 @@ import kotlinx.coroutines.launch
 import racra.compose.smooth_corner_rect_library.AbsoluteSmoothCornerShape
 import kotlin.math.roundToInt
 
-private const val SourceRepoUrl = "https://github.com/liqtranq/Liquid_Player"
+private const val SourceRepoUrl = "https://github.com/liqtranq/liquid-player"
 private const val ReleasesUrl = "$SourceRepoUrl/releases"
 private const val UpstreamRepoUrl = "https://github.com/PixelPlayerHQ/PixelPlayerOSS"
 
