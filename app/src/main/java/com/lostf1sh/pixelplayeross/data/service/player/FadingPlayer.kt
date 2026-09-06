@@ -19,6 +19,7 @@ import kotlinx.coroutines.launch
  * defeat the normalization. [getVolume] reports the logical volume during a fade rather
  * than the transient mid-ramp value.
  */
+@androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
 class FadingPlayer(
     val innerPlayer: Player,
     private val scope: CoroutineScope,

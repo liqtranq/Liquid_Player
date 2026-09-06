@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string-array name="liquid_changelog_041">
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Release notes currently support English and Russian; other locales use English. -->
+    <string-array name="liquid_changelog_041" tools:ignore="MissingTranslation">
         <item>Simpler About screen, updated app labels and GitHub links.</item>
         <item>Liquid Player by liqtranq, with separate PixelPlayer architecture credits.</item>
         <item>Corrected the app version and GitHub build configuration.</item>
     </string-array>
-    <string-array name="liquid_changelog_040">
+    <string-array name="liquid_changelog_040" tools:ignore="MissingTranslation">
         <item>Tag editing, filename parsing, tag cleanup and artwork selection.</item>
         <item>Audio conversion to M4A/AAC or WAV/PCM 16-bit.</item>
         <item>Sample downloads and podcast controls in the experimental Telegram Audio Deck.</item>
     </string-array>
-    <string-array name="liquid_changelog_030">
+    <string-array name="liquid_changelog_030" tools:ignore="MissingTranslation">
         <item>LIQTRANQ visual style and tactile animations.</item>
         <item>Folder cover support and cloud artwork caching.</item>
         <item>Experimental Telegram Audio Deck with sample streams.</item>

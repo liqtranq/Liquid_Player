@@ -14,6 +14,8 @@ Changes to Liquid Player by liqtranq. Earlier PixelPlayerOSS history is preserve
 - Corrected the application version after the 0.4.0 release.
 - Fixed GitHub issue template configuration and moved APK workflows to standard GitHub runners.
 - Allowed the About description to wrap fully on narrow screens.
+- Completed About translations for all twelve supported languages.
+- Corrected Russian plural forms and the missing Media3 API opt-in in FadingPlayer.
 
 ## [0.4.0] - 2026-09-06
 

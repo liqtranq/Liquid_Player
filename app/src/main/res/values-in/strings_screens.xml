@@ -212,4 +212,16 @@
     <string name="word_delimiter_toast_invalid">Sudah ada atau tidak valid</string>
     <string name="word_delimiter_toast_reset">Pemisah kata direset ke default</string>
     <string name="word_delimiters_screen_title">Pemisah Kata</string>
+    <string name="about_tagline">Pemutar musik Android dengan fitur lanjutan.</string>
+    <string name="about_maintainer_title">Pengembang</string>
+    <string name="about_project_subtitle">Kode sumber dan unduhan.</string>
+    <string name="about_link_releases_title">Rilis</string>
+    <string name="about_link_releases_subtitle">Unduh Liquid Player dari GitHub</string>
+    <string name="about_developer_role">Pengembang Liquid Player</string>
+    <string name="about_developer_detail">Desain dan alat musik tambahan.</string>
+    <string name="about_signal_local">Musik lokal</string>
+    <string name="about_signal_customizable">Dapat disesuaikan</string>
+    <string name="about_origins_title">Arsitektur dan ucapan terima kasih</string>
+    <string name="about_origins_body">Liquid Player berbasis PixelPlayerOSS dan mewarisi sebagian besar arsitektur serta kode inti PixelPlayer. Terima kasih kepada Theo Vilardo, @lostf1sh, dan kontributor proyek asal. Lisensi: GPL-3.0-or-later.</string>
+    <string name="about_origins_link">PixelPlayerOSS di GitHub</string>
 </resources>
