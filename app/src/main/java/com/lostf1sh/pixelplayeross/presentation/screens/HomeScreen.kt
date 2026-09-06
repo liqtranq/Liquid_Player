@@ -240,6 +240,7 @@ fun HomeScreen(
     var showChangelogBottomSheet by remember { mutableStateOf(false) }
     var showBetaInfoBottomSheet by remember { mutableStateOf(false) }
     var showStreamingProviderSheet by remember { mutableStateOf(false) }
+    var showTelegramPlayerSheet by remember { mutableStateOf(false) }
     val sheetState = rememberModalSheetState()
     val betaSheetState = rememberModalSheetState()
     val scope = rememberCoroutineScope()
@@ -537,7 +538,16 @@ fun HomeScreen(
             isJellyfinLoggedIn = isJellyfinLoggedIn,
             onNavigateToJellyfinDashboard = {
                 navController.navigateSafely(Screen.JellyfinDashboard.route)
+            },
+            onOpenTelegramSheet = {
+                showTelegramPlayerSheet = true
             }
+        )
+    }
+    if (showTelegramPlayerSheet) {
+        com.lostf1sh.pixelplayeross.presentation.components.TelegramPlayerSheet(
+            onDismissRequest = { showTelegramPlayerSheet = false },
+            playerViewModel = playerViewModel
         )
     }
 }

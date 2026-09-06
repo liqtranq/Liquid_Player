@@ -1040,6 +1040,14 @@ private fun FullPlayerControlsSection(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            com.lostf1sh.pixelplayeross.ui.theme.LiquidStereoVuMeter(
+                isPlaying = isPlayingProvider(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 14.dp)
+                    .padding(bottom = 6.dp)
+            )
+
             AnimatedPlaybackControls(
                 modifier = Modifier
                     .padding(horizontal = 12.dp, vertical = 8.dp),
@@ -1789,14 +1797,20 @@ private fun EfficientTimeLabels(
         ) {
             Text(
                 posStr,
-                style = MaterialTheme.typography.bodySmall.copy(fontSize = 12.sp),
-                fontWeight = FontWeight.SemiBold,
+                style = MaterialTheme.typography.bodySmall.copy(
+                    fontSize = 12.sp,
+                    fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace
+                ),
+                fontWeight = FontWeight.Bold,
                 color = textColor
             )
             Text(
                 durStr,
-                style = MaterialTheme.typography.bodySmall.copy(fontSize = 12.sp),
-                fontWeight = FontWeight.SemiBold,
+                style = MaterialTheme.typography.bodySmall.copy(
+                    fontSize = 12.sp,
+                    fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace
+                ),
+                fontWeight = FontWeight.Bold,
                 color = textColor
             )
         }
@@ -1806,19 +1820,21 @@ private fun EfficientTimeLabels(
                 modifier = Modifier
                     .align(Alignment.Center)
                     .padding(horizontal = 58.dp),
-                shape = RoundedCornerShape(999.dp),
+                shape = RoundedCornerShape(2.dp),
                 color = textColor.copy(alpha = 0.14f),
                 contentColor = textColor.copy(alpha = 0.96f)
             ) {
                 Text(
                     text = audioMetaLabel,
                     style = MaterialTheme.typography.labelSmall.copy(
-                        fontWeight = FontWeight.Medium,
-                        fontSize = 11.sp
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 10.sp,
+                        fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace,
+                        letterSpacing = 0.5.sp
                     ),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.padding(horizontal = 10.dp, vertical = 3.dp)
+                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
                 )
             }
         }
@@ -2009,12 +2025,13 @@ private fun PlayerSongInfo(
     }
     val titleStyle = MaterialTheme.typography.headlineSmall.copy(
         fontWeight = FontWeight.Bold,
-        fontFamily = RoundedSans,
+        fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace,
         color = textColor
     )
 
     val artistStyle = MaterialTheme.typography.titleMedium.copy(
         letterSpacing = 0.sp,
+        fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace,
         color = artistTextColor
     )
 
@@ -2030,7 +2047,7 @@ private fun PlayerSongInfo(
             }
     ) {
         AutoScrollingTextOnDemand(
-            text = title,
+            text = "◆ " + title,
             style = titleStyle,
             gradientEdgeColor = gradientEdgeColor,
             expansionFractionProvider = expansionFractionProvider,

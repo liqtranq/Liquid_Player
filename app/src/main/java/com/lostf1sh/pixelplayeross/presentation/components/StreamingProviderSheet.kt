@@ -42,6 +42,7 @@ fun StreamingProviderSheet(
     onNavigateToNavidromeDashboard: () -> Unit = {},
     isJellyfinLoggedIn: Boolean = false,
     onNavigateToJellyfinDashboard: () -> Unit = {},
+    onOpenTelegramSheet: () -> Unit = {},
     sheetState: SheetState = rememberModalSheetState(
         skipPartiallyExpanded = true
     )
@@ -127,6 +128,19 @@ fun StreamingProviderSheet(
                             } else {
                                 context.startActivity(Intent(context, JellyfinLoginActivity::class.java))
                             }
+                            onDismissRequest()
+                        }
+                    )
+
+                    ProviderRow(
+                        iconPainter = painterResource(R.drawable.telegram),
+                        iconTint = Color(0xFF0088CC),
+                        title = "Telegram Audio",
+                        subtitle = "Stream from Saved Messages & channels",
+                        shape = providerSegmentItemShape,
+                        isConnected = false,
+                        onClick = {
+                            onOpenTelegramSheet()
                             onDismissRequest()
                         }
                     )

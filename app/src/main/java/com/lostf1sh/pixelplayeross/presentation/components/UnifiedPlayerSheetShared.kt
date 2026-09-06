@@ -42,6 +42,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -96,7 +97,7 @@ internal fun MiniPlayerContentInternal(
                 SmartImage(
                     model = albumArtModel,
                     contentDescription = stringResource(R.string.cd_album_art_for_title, song.title),
-                    shape = CircleShape,
+                    shape = RoundedCornerShape(4.dp),
                     targetSize = Size(150, 150),
                     modifier = Modifier.size(44.dp)
                 )
@@ -116,16 +117,16 @@ internal fun MiniPlayerContentInternal(
             verticalArrangement = Arrangement.Center
         ) {
             val titleStyle = MaterialTheme.typography.titleSmall.copy(
-                fontSize = 15.sp,
-                fontWeight = FontWeight.SemiBold,
-                letterSpacing = (-0.2).sp,
-                fontFamily = RoundedSans,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold,
+                letterSpacing = 0.sp,
+                fontFamily = FontFamily.Monospace,
                 color = LocalMaterialTheme.current.onPrimaryContainer
             )
             val artistStyle = MaterialTheme.typography.bodySmall.copy(
-                fontSize = 13.sp,
+                fontSize = 12.sp,
                 letterSpacing = 0.sp,
-                fontFamily = RoundedSans,
+                fontFamily = FontFamily.Monospace,
                 color = LocalMaterialTheme.current.onPrimaryContainer.copy(alpha = 0.7f)
             )
 
@@ -133,7 +134,7 @@ internal fun MiniPlayerContentInternal(
                 text = when {
                     isOutputConnecting -> "Connecting to device…"
                     isPreparingPlayback -> "Preparing playback…"
-                    else -> song.title
+                    else -> "◆ " + song.title
                 },
                 style = titleStyle,
                 gradientEdgeColor = LocalMaterialTheme.current.primaryContainer,
@@ -151,7 +152,7 @@ internal fun MiniPlayerContentInternal(
         Box(
             modifier = Modifier
                 .size(36.dp)
-                .clip(CircleShape)
+                .clip(RoundedCornerShape(4.dp))
                 .background(LocalMaterialTheme.current.onPrimary)
                 .clickable(
                     interactionSource = previousInteraction,
@@ -174,7 +175,7 @@ internal fun MiniPlayerContentInternal(
         Spacer(modifier = Modifier.width(8.dp))
 
         val playPauseCorner by animateDpAsState(
-            targetValue = if (isPlaying) 10.dp else 18.dp,
+            targetValue = if (isPlaying) 4.dp else 6.dp,
             animationSpec = MaterialTheme.motionScheme.defaultSpatialSpec(),
             label = "MiniPlayerPlayPauseCorner"
         )
@@ -205,7 +206,7 @@ internal fun MiniPlayerContentInternal(
         Box(
             modifier = Modifier
                 .size(36.dp)
-                .clip(CircleShape)
+                .clip(RoundedCornerShape(4.dp))
                 .background(LocalMaterialTheme.current.onPrimary)
                 .clickable(
                     interactionSource = nextInteraction,

@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">PixelPlayerOSS</string>
-    <string name="app_name_change_title">App Name Change</string>
-    <string name="app_name_change_message">This app is now PixelPlayerOSS. Keep playing!</string>
+    <string name="app_name">Liquid Player</string>
+    <string name="app_name_change_title">Liquid Player</string>
+    <string name="app_name_change_message">Welcome to Liquid Player. Analog Hi-Fi Sound &amp; Telegram Cloud.</string>
     <string name="do_not_show_again">Do not show again</string>
     <string name="dismiss">Dismiss</string>
     <string name="all_files_access_title">Special Permission Required</string>

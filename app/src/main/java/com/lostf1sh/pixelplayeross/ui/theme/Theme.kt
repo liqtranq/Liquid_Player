@@ -69,41 +69,59 @@ fun PixelPlayerStatusBarStyle(
 }
 
 val DarkColorScheme = darkColorScheme(
-    primary = PixelPlayerPurplePrimary,
-    secondary = PixelPlayerPink,
-    tertiary = PixelPlayerOrange,
-    background = PixelPlayerPurpleDark,
-    surface = PixelPlayerSurface,
+    primary = LiquidRustDark,
     onPrimary = PixelPlayerWhite,
-    onSecondary = PixelPlayerWhite,
+    primaryContainer = LiquidRustDarkMuted,
+    onPrimaryContainer = Color(0xFFFFB499),
+    secondary = Color(0xFFC1B8A7),
+    onSecondary = LiquidCanvasDark,
+    secondaryContainer = Color(0xFF25231F),
+    onSecondaryContainer = LiquidTextPrimaryDark,
+    tertiary = LiquidRustDark,
     onTertiary = PixelPlayerWhite,
-    onBackground = PixelPlayerWhite,
-    onSurface = PixelPlayerLightPurple,
-    error = Color(0xFFFF5252),
+    tertiaryContainer = LiquidRustDarkMuted,
+    onTertiaryContainer = Color(0xFFFFB499),
+    background = LiquidCanvasDark,
+    onBackground = LiquidTextPrimaryDark,
+    surface = LiquidPanelBgDark,
+    onSurface = LiquidTextPrimaryDark,
+    surfaceVariant = LiquidCardBgDark,
+    onSurfaceVariant = LiquidTextMutedDark,
+    surfaceContainer = LiquidPanelBgDark,
+    surfaceContainerLow = LiquidPanelInnerDark,
+    surfaceContainerHigh = Color(0xFF22201B),
+    surfaceContainerHighest = Color(0xFF2A2822),
+    outline = LiquidLineDark,
+    outlineVariant = LiquidLineLightDark,
+    error = LiquidErrorDark,
     onError = PixelPlayerWhite
 )
 
 val LightColorScheme = lightColorScheme(
-    primary = LightPrimary,
+    primary = LiquidRustLight,
     onPrimary = PixelPlayerWhite,
-    primaryContainer = LightPrimaryContainer,
-    onPrimaryContainer = LightOnPrimaryContainer,
-    secondary = PixelPlayerPink,
+    primaryContainer = Color(0xFFF0DCD3),
+    onPrimaryContainer = Color(0xFF3E1508),
+    secondary = Color(0xFF625C53),
     onSecondary = PixelPlayerWhite,
-    secondaryContainer = PixelPlayerPink.copy(alpha = 0.15f),
-    onSecondaryContainer = PixelPlayerPink.copy(alpha = 0.85f),
-    tertiary = PixelPlayerOrange,
-    onTertiary = PixelPlayerBlack,
-    background = LightBackground,
-    onBackground = LightOnSurface,
-    surface = LightSurface,
-    onSurface = LightOnSurface,
-    surfaceVariant = LightSurfaceVariant,
-    onSurfaceVariant = LightOnSurfaceVariant,
-    outline = LightOutline,
-    outlineVariant = LightOutline.copy(alpha = 0.6f),
-    surfaceTint = LightPrimary,
-    error = Color(0xFFD32F2F),
+    secondaryContainer = Color(0xFFE5DECF),
+    onSecondaryContainer = LiquidTextPrimaryLight,
+    tertiary = LiquidRustLight,
+    onTertiary = PixelPlayerWhite,
+    background = LiquidCanvasLight,
+    onBackground = LiquidTextPrimaryLight,
+    surface = Color(0xFFE2DAC8),
+    onSurface = LiquidTextPrimaryLight,
+    surfaceVariant = Color(0xFFD4CCA8),
+    onSurfaceVariant = LiquidTextMutedLight,
+    surfaceContainer = Color(0xFFE2DAC8),
+    surfaceContainerLow = Color(0xFFEAE3D2),
+    surfaceContainerHigh = Color(0xFFDCD3C0),
+    surfaceContainerHighest = Color(0xFFD2C9B5),
+    outline = LiquidLineLight,
+    outlineVariant = LiquidLineLightLight,
+    surfaceTint = LiquidRustLight,
+    error = LiquidErrorLight,
     onError = PixelPlayerWhite
 )
 
@@ -116,13 +134,6 @@ fun PixelPlayerTheme(
 ) {
     val context = LocalContext.current
     val finalColorScheme = when {
-        colorSchemePairOverride == null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            try {
-                if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-            } catch (e: Exception) {
-                if (darkTheme) DarkColorScheme else LightColorScheme
-            }
-        }
         colorSchemePairOverride != null -> {
             if (darkTheme) colorSchemePairOverride.dark else colorSchemePairOverride.light
         }

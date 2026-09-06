@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.SkipNext
 import androidx.compose.material.icons.rounded.SkipPrevious
@@ -58,8 +59,8 @@ fun AnimatedPlaybackControls(
     compressionWeight: Float = 0.65f,
     pressAnimationSpec: AnimationSpec<Float>,
     releaseDelay: Long = 220L,
-    playPauseCornerPlaying: Dp = 60.dp,
-    playPauseCornerPaused: Dp = 26.dp,
+    playPauseCornerPlaying: Dp = 8.dp,
+    playPauseCornerPaused: Dp = 6.dp,
     colorOtherButtons: Color = LocalMaterialTheme.current.secondaryContainer,
     colorPlayPause: Color = LocalMaterialTheme.current.primary,
     tintPlayPauseIcon: Color = LocalMaterialTheme.current.onPrimary,
@@ -137,7 +138,7 @@ fun AnimatedPlaybackControls(
                 modifier = Modifier
                     .weight(prevWeight)
                     .fillMaxHeight()
-                    .clip(CircleShape)
+                    .clip(RoundedCornerShape(6.dp))
                     .background(colorPreviousButton)
                     .clickable {
                         lastClicked = PlaybackButtonType.PREVIOUS
@@ -202,7 +203,7 @@ fun AnimatedPlaybackControls(
                 modifier = Modifier
                     .weight(nextWeight)
                     .fillMaxHeight()
-                    .clip(CircleShape)
+                    .clip(RoundedCornerShape(6.dp))
                     .background(colorNextButton)
                     .clickable {
                         lastClicked = PlaybackButtonType.NEXT

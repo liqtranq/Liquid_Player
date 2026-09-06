@@ -17,12 +17,14 @@ import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileInputStream
+import android.os.Looper
+import com.lostf1sh.pixelplayeross.data.network.cover.OnlineCoverArtService
 import java.io.InputStream
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.math.roundToInt
 
 object AlbumArtUtils {
-    private const val CACHE_VERSION_SUFFIX = "_v4"
+    private const val CACHE_VERSION_SUFFIX = "_v5"
 
     // Cached covers are display-only; the source audio file keeps its original art untouched.
     // Embedded covers can be multi-megabyte full-resolution scans, and re-decoding such a blob
@@ -41,16 +43,17 @@ object AlbumArtUtils {
     // cover don't read the large blob into memory more than once concurrently.
     private val artworkShrinkInFlight = ConcurrentHashMap.newKeySet<String>()
     private val commonArtworkFileNames = listOf(
-        "cover.jpg", "cover.png", "cover.jpeg",
-        "folder.jpg", "folder.png", "folder.jpeg",
-        "album.jpg", "album.png", "album.jpeg",
-        "albumart.jpg", "albumart.png", "albumart.jpeg",
-        "artwork.jpg", "artwork.png", "artwork.jpeg",
-        "front.jpg", "front.png", "front.jpeg",
+        "cover.jpg", "cover.png", "cover.jpeg", "cover.webp",
+        "folder.jpg", "folder.png", "folder.jpeg", "folder.webp",
+        "album.jpg", "album.png", "album.jpeg", "album.webp",
+        "albumart.jpg", "albumart.png", "albumart.jpeg", "albumart.webp",
+        "artwork.jpg", "artwork.png", "artwork.jpeg", "artwork.webp",
+        "front.jpg", "front.png", "front.jpeg", "front.webp",
         ".folder.jpg", ".albumart.jpg",
         "thumb.jpg", "thumbnail.jpg",
         "scan.jpg", "scanned.jpg"
     )
+    private val imageExtensions = setOf("jpg", "jpeg", "png", "webp")
     private val genericMixedDirectoryNames = setOf(
         "download",
         "downloads",
@@ -68,11 +71,8 @@ object AlbumArtUtils {
     )
 
     /**
-     * Main function to get album art for local songs.
-     *
-     * Local artwork is intentionally embedded-only. Falling back to folder images such as
-     * cover.jpg/thumb.jpg can pick unrelated Gallery files when music is stored in mixed
-     * directories, and can duplicate the same image across unrelated tracks.
+     * Main function to get album art URI for local songs.
+     * Supports embedded tags, local folder art (cover.jpg/folder.jpg), and online cover resolution.
      */
     fun getAlbumArtUri(
         appContext: Context,
@@ -168,6 +168,16 @@ object AlbumArtUtils {
                 scheduleOversizedArtworkShrink(cachedFile)
                 return cachedFile
             }
+            // Check if legacy _v4 cached file exists and migrate it
+            val legacyV4 = legacyCachedAlbumArtFile(appContext, songId, "_v4")
+            if (legacyV4.exists() && legacyV4.length() > 0) {
+                runCatching {
+                    legacyV4.copyTo(cachedFile, overwrite = true)
+                    legacyV4.delete()
+                    cachedFile.setLastModified(System.currentTimeMillis())
+                    return cachedFile
+                }
+            }
             if (noArtFile.exists()) {
                 return null
             }
@@ -176,14 +186,83 @@ object AlbumArtUtils {
             noArtFile.delete()
         }
 
-        val resolvedPath = filePath ?: resolveSongMediaStoreInfo(appContext, songId)?.path ?: return null
-        if (!File(resolvedPath).exists()) {
-            return null
+        val resolvedInfo = resolveSongMediaStoreInfo(appContext, songId)
+        val resolvedPath = filePath ?: resolvedInfo?.path
+        val audioFile = resolvedPath?.let(::File)
+
+        // 1. Embedded artwork in audio file (ID3, Vorbis, FLAC, MP4)
+        if (resolvedPath != null && audioFile?.exists() == true) {
+            extractEmbeddedAlbumArtBytes(resolvedPath)?.let { bytes ->
+                cacheAlbumArtBytes(appContext, bytes, songId)
+                return cachedFile.takeIf { it.exists() && it.length() > 0 }
+            }
         }
 
-        extractEmbeddedAlbumArtBytes(resolvedPath)?.let { bytes ->
-            cacheAlbumArtBytes(appContext, bytes, songId)
-            return cachedFile.takeIf { it.exists() && it.length() > 0 }
+        // 2. Folder artwork (cover.jpg, folder.jpg, etc.) in the music directory
+        if (resolvedPath != null && audioFile?.exists() == true) {
+            findExternalAlbumArtFile(resolvedPath)?.let { folderArtFile ->
+                val bytes = runCatching { folderArtFile.readBytes() }.getOrNull()
+                if (bytes != null && bytes.isNotEmpty()) {
+                    cacheAlbumArtBytes(appContext, bytes, songId)
+                    return cachedFile.takeIf { it.exists() && it.length() > 0 }
+                }
+            }
+        }
+
+        // 3. MediaStore album art fallback
+        resolvedInfo?.albumId?.let { albumId ->
+            getMediaStoreAlbumArtBytes(appContext, albumId)?.let { bytes ->
+                cacheAlbumArtBytes(appContext, bytes, songId)
+                return cachedFile.takeIf { it.exists() && it.length() > 0 }
+            }
+        }
+
+        // 4. Same-album cached artwork (if already resolved for this album)
+        resolvedInfo?.albumId?.let { albumId ->
+            val albumCache = getCachedAlbumFile(appContext, albumId)
+            if (albumCache.exists() && albumCache.length() > 0) {
+                runCatching {
+                    albumCache.copyTo(cachedFile, overwrite = true)
+                    noArtFile.delete()
+                    return cachedFile.takeIf { it.exists() && it.length() > 0 }
+                }
+            }
+        }
+
+        // 5. Online artwork from Deezer API & save locally so it stays permanently
+        if (Looper.myLooper() != Looper.getMainLooper()) {
+            val title = resolvedInfo?.title
+            val artist = resolvedInfo?.artist
+            val album = resolvedInfo?.album
+
+            val onlineUrl = OnlineCoverArtService.searchCoverArtUrl(
+                artist = artist,
+                album = album,
+                title = title,
+                filePath = resolvedPath
+            )
+
+            if (!onlineUrl.isNullOrBlank()) {
+                val downloadedBytes = OnlineCoverArtService.downloadImageBytes(onlineUrl)
+                if (downloadedBytes != null && downloadedBytes.isNotEmpty()) {
+                    cacheAlbumArtBytes(appContext, downloadedBytes, songId)
+
+                    // Also save for albumId to reuse for other tracks in the same album
+                    resolvedInfo?.albumId?.let { albumId ->
+                        runCatching {
+                            val albumCache = getCachedAlbumFile(appContext, albumId)
+                            cachedFile.copyTo(albumCache, overwrite = true)
+                        }
+                    }
+
+                    // Try saving cover.jpg to the audio file directory if accessible
+                    if (resolvedPath != null) {
+                        OnlineCoverArtService.trySaveCoverToMusicFolder(resolvedPath, downloadedBytes)
+                    }
+
+                    return cachedFile.takeIf { it.exists() && it.length() > 0 }
+                }
+            }
         }
 
         cachedFile.delete()
@@ -246,16 +325,18 @@ object AlbumArtUtils {
             return true
         }
 
-        cachedFile.delete()
-        noArtFile.createNewFile()
-        return false
+        val hasFolderArt = findExternalAlbumArtFile(filePath) != null
+        if (hasFolderArt) {
+            noArtFile.delete()
+            return true
+        }
+
+        // Return true so LocalArtworkUri is assigned to the song, enabling Coil to fetch online art and cache locally!
+        return true
     }
 
     /**
      * Look for external album art files in the same directory.
-     *
-     * This is kept for explicit, controlled callers only. The default local-song artwork path
-     * must remain embedded-only so the app does not pull unrelated personal Gallery files.
      */
     fun getExternalAlbumArtUri(filePath: String): Uri? {
         return runCatching {
@@ -266,15 +347,44 @@ object AlbumArtUtils {
     internal fun findExternalAlbumArtFile(filePath: String): File? {
         val audioFile = File(filePath)
         val directory = audioFile.parentFile ?: return null
-        if (!directory.exists() || !directory.isDirectory) return null
+        if (!directory.exists() || !directory.isDirectory || !directory.canRead()) return null
         if (!shouldTrustDirectoryArtwork(directory.name)) return null
 
-        return commonArtworkFileNames
-            .asSequence()
-            .map { name -> File(directory, name) }
-            .firstOrNull { artFile ->
-                artFile.exists() && artFile.isFile && artFile.length() > 1024
-            }
+        val files = runCatching { directory.listFiles() }.getOrNull() ?: return null
+        if (files.isEmpty()) return null
+
+        val imageFiles = files.filter { f ->
+            f.isFile && f.canRead() && f.length() >= 512 &&
+                f.extension.lowercase() in imageExtensions
+        }
+        if (imageFiles.isEmpty()) return null
+
+        // 1. Direct match against known artwork file names (case-insensitive)
+        for (name in commonArtworkFileNames) {
+            val match = imageFiles.firstOrNull { it.name.equals(name, ignoreCase = true) }
+            if (match != null) return match
+        }
+
+        // 2. Base name matches (e.g. "cover", "folder", "front", "album", "artwork")
+        val priorityBaseNames = setOf("cover", "folder", "front", "album", "albumart", "artwork", "thumb", ".folder", ".albumart")
+        val baseMatch = imageFiles.firstOrNull { f ->
+            f.nameWithoutExtension.lowercase() in priorityBaseNames
+        }
+        if (baseMatch != null) return baseMatch
+
+        // 3. Explicit cover prefix/suffix (e.g. "front_cover", "cover_front", "album_art")
+        val patternMatch = imageFiles.firstOrNull { f ->
+            val n = f.nameWithoutExtension.lowercase()
+            n.startsWith("cover_") || n.startsWith("cover-") ||
+                n.endsWith("_cover") || n.endsWith("-cover") ||
+                n.startsWith("front_") || n.endsWith("_front") ||
+                n == "album_art" || n == "album-art"
+        }
+        if (patternMatch != null) return patternMatch
+
+        // 4. Matches the audio file name itself (e.g. song "Feels.mp3" with "Feels.jpg")
+        val audioBase = audioFile.nameWithoutExtension.lowercase()
+        return imageFiles.firstOrNull { it.nameWithoutExtension.equals(audioBase, ignoreCase = true) }
     }
 
     internal fun shouldTrustDirectoryArtwork(directoryName: String): Boolean {
@@ -320,6 +430,8 @@ object AlbumArtUtils {
         listOf(
             getCachedAlbumArtFile(appContext, songId),
             noArtMarkerFile(appContext, songId),
+            legacyCachedAlbumArtFile(appContext, songId, "_v4"),
+            legacyNoArtMarkerFile(appContext, songId, "_v4"),
             legacyCachedAlbumArtFile(appContext, songId, "_v3"),
             legacyNoArtMarkerFile(appContext, songId, "_v3"),
             legacyCachedAlbumArtFile(appContext, songId, "_v2"),
@@ -327,6 +439,21 @@ object AlbumArtUtils {
             legacyCachedAlbumArtFile(appContext, songId),
             legacyNoArtMarkerFile(appContext, songId)
         ).forEach { it.delete() }
+    }
+
+    fun getCachedAlbumFile(appContext: Context, albumId: Long): File {
+        return File(getAlbumArtDir(appContext), "album_art_${albumId}${CACHE_VERSION_SUFFIX}.jpg")
+    }
+
+    private fun getMediaStoreAlbumArtBytes(appContext: Context, albumId: Long): ByteArray? {
+        if (albumId <= 0) return null
+        val potentialUri = ContentUris.withAppendedId(
+            "content://media/external/audio/albumart".toUri(),
+            albumId
+        )
+        return runCatching {
+            appContext.contentResolver.openInputStream(potentialUri)?.use { it.readBytes() }
+        }.getOrNull()?.takeIf { it.isNotEmpty() }
     }
 
     private const val ALBUM_ART_DIR_NAME = "album_art"
@@ -493,7 +620,10 @@ object AlbumArtUtils {
 
     private data class MediaStoreSongInfo(
         val path: String,
-        val albumId: Long?
+        val albumId: Long?,
+        val title: String? = null,
+        val artist: String? = null,
+        val album: String? = null
     )
 
     private fun resolveSongMediaStoreInfo(
@@ -504,7 +634,10 @@ object AlbumArtUtils {
         val selectionArgs = arrayOf(songId.toString())
         val projection = arrayOf(
             MediaStore.Audio.Media.DATA,
-            MediaStore.Audio.Media.ALBUM_ID
+            MediaStore.Audio.Media.ALBUM_ID,
+            MediaStore.Audio.Media.TITLE,
+            MediaStore.Audio.Media.ARTIST,
+            MediaStore.Audio.Media.ALBUM
         )
 
         return runCatching {
@@ -518,9 +651,20 @@ object AlbumArtUtils {
                 if (!cursor.moveToFirst()) return@use null
                 val path = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA))
                 val albumId = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM_ID))
+                val titleCol = cursor.getColumnIndex(MediaStore.Audio.Media.TITLE)
+                val artistCol = cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)
+                val albumCol = cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)
+
+                val title = if (titleCol >= 0) cursor.getString(titleCol) else null
+                val artist = if (artistCol >= 0) cursor.getString(artistCol) else null
+                val album = if (albumCol >= 0) cursor.getString(albumCol) else null
+
                 MediaStoreSongInfo(
                     path = path,
-                    albumId = albumId.takeIf { it > 0L }
+                    albumId = albumId.takeIf { it > 0L },
+                    title = title,
+                    artist = artist,
+                    album = album
                 )
             }
         }.getOrNull()

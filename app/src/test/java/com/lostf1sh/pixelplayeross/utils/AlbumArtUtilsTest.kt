@@ -57,4 +57,44 @@ class AlbumArtUtilsTest {
         assertThat(resolved).isNull()
         root.deleteRecursively()
     }
+
+    @Test
+    fun findExternalAlbumArtFile_matchesCaseInsensitiveCover() {
+        val root = createTempDirectory("album-art-test").toFile()
+        val albumDir = root.resolve("Daft Punk - Discovery").apply { mkdirs() }
+        val songFile = albumDir.resolve("One More Time.flac").apply { writeBytes(byteArrayOf(1, 2, 3)) }
+        val coverFile = albumDir.resolve("Cover.JPG").apply { writeBytes(ByteArray(2048) { 8 }) }
+
+        val resolved = AlbumArtUtils.findExternalAlbumArtFile(songFile.absolutePath)
+
+        assertThat(resolved).isEqualTo(coverFile)
+        root.deleteRecursively()
+    }
+
+    @Test
+    fun findExternalAlbumArtFile_matchesFrontCoverPattern() {
+        val root = createTempDirectory("album-art-test").toFile()
+        val albumDir = root.resolve("Pink Floyd - The Wall").apply { mkdirs() }
+        val songFile = albumDir.resolve("Comfortably Numb.mp3").apply { writeBytes(byteArrayOf(1, 2, 3)) }
+        val coverFile = albumDir.resolve("front_cover.png").apply { writeBytes(ByteArray(2048) { 4 }) }
+
+        val resolved = AlbumArtUtils.findExternalAlbumArtFile(songFile.absolutePath)
+
+        assertThat(resolved).isEqualTo(coverFile)
+        root.deleteRecursively()
+    }
+
+    @Test
+    fun findExternalAlbumArtFile_matchesAudioFileBaseName() {
+        val root = createTempDirectory("album-art-test").toFile()
+        val albumDir = root.resolve("EP").apply { mkdirs() }
+        val songFile = albumDir.resolve("Special Track.wav").apply { writeBytes(byteArrayOf(1, 2, 3)) }
+        val coverFile = albumDir.resolve("Special Track.jpg").apply { writeBytes(ByteArray(2048) { 2 }) }
+
+        val resolved = AlbumArtUtils.findExternalAlbumArtFile(songFile.absolutePath)
+
+        assertThat(resolved).isEqualTo(coverFile)
+        root.deleteRecursively()
+    }
 }
+
