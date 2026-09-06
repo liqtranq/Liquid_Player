@@ -2,7 +2,7 @@
 
 Changes to Liquid Player. Earlier PixelPlayerOSS history is preserved below.
 
-## [Unreleased]
+## [0.4.2] - 2026-09-06
 
 ### Added
 - Circular mini-player artwork with lifecycle-aware rotation that pauses without resetting the angle.
