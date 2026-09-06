@@ -5,6 +5,15 @@ Changes to Liquid Player. Earlier PixelPlayerOSS history is preserved below.
 ## [Unreleased]
 
 ### Added
+- Circular mini-player artwork with lifecycle-aware rotation that pauses without resetting the angle.
+- Real PCM RMS audio metering with segmented, continuous and needle displays, selectable in Appearance settings.
+
+### Fixed
+- Apply artwork palettes atomically and ignore late results from previous tracks; retain the displayed app palette while the next one loads.
+- Remove duplicate whole-player color animations and per-segment VU layouts. Meter updates only redraw its Canvas, and sampling stops when hidden.
+- Give the lyrics header full available width, remove nested size animations and shorten the Russian synchronized-mode label to “По времени”.
+
+### Previously added
 - Hide artists with fewer than five tracks in the selected library by default. The filter can be disabled in Settings → Library → Artists and applies immediately without rescanning or removing songs.
 - Apply the artist threshold before pagination, including album-artist grouping, directory and storage filters. Show a filter explanation when the Artists tab is empty.
 

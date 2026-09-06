@@ -5,8 +5,7 @@ import com.lostf1sh.pixelplayeross.presentation.viewmodel.ColorSchemePair
 /**
  * Selects the optional application-wide now-playing palette.
  *
- * A missing palette falls back to the normal app theme while playing. When playback is paused,
- * the last palette produced for that same song is retained so pausing does not recolor the UI.
+ * Keep the displayed palette while the next artwork loads, then apply the new palette once.
  */
 internal fun resolveAppWideNowPlayingColorSchemePair(
     enabled: Boolean,
@@ -14,10 +13,10 @@ internal fun resolveAppWideNowPlayingColorSchemePair(
     isPlaying: Boolean,
     currentSongScheme: ColorSchemePair?,
     lastValidSongId: String?,
-    lastValidScheme: ColorSchemePair?
+    lastValidScheme: ColorSchemePair?,
+    hasArtwork: Boolean = true
 ): ColorSchemePair? {
-    if (!enabled || currentSongId == null) return null
+    if (!enabled || currentSongId == null || !hasArtwork) return null
     if (currentSongScheme != null) return currentSongScheme
-    if (!isPlaying && currentSongId == lastValidSongId) return lastValidScheme
-    return null
+    return lastValidScheme
 }

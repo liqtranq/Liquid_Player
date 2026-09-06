@@ -1042,6 +1042,7 @@ private fun FullPlayerControlsSection(
         ) {
             com.lostf1sh.pixelplayeross.ui.theme.LiquidStereoVuMeter(
                 isPlaying = isPlayingProvider(),
+                visible = currentSheetState == PlayerSheetState.EXPANDED && !isSheetDragGestureActive,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 14.dp)

@@ -174,6 +174,7 @@ constructor(
         val ARTIST_WORD_DELIMITERS = stringPreferencesKey("artist_word_delimiters")
         val EXTRACT_ARTISTS_FROM_TITLE = booleanPreferencesKey("extract_artists_from_title")
         val GROUP_BY_ALBUM_ARTIST = booleanPreferencesKey("group_by_album_artist")
+        val VU_METER_STYLE = stringPreferencesKey("vu_meter_style")
         val HIDE_ARTISTS_WITH_FEW_TRACKS = booleanPreferencesKey("hide_artists_with_few_tracks")
         val ARTIST_SETTINGS_RESCAN_REQUIRED =
                 booleanPreferencesKey("artist_settings_rescan_required")
@@ -486,6 +487,14 @@ constructor(
             dataStore.data.map { preferences ->
                 preferences[PreferencesKeys.GROUP_BY_ALBUM_ARTIST] ?: false
             }
+
+    val vuMeterStyleFlow: Flow<String> = dataStore.data.map {
+        VuMeterStyle.sanitize(it[PreferencesKeys.VU_METER_STYLE])
+    }.distinctUntilChanged()
+
+    suspend fun setVuMeterStyle(style: String) {
+        dataStore.edit { it[PreferencesKeys.VU_METER_STYLE] = VuMeterStyle.sanitize(style) }
+    }
 
     val hideArtistsWithFewTracksFlow: Flow<Boolean> = dataStore.data.map { preferences ->
         preferences[PreferencesKeys.HIDE_ARTISTS_WITH_FEW_TRACKS] ?: true

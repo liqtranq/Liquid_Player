@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vu_meter_title">Medidor de nivel de audio</string>
+    <string name="vu_meter_description">Niveles de audio reales: elige un estilo o desactiva el medidor.</string>
+    <string name="vu_meter_segments">Segmentos</string>
+    <string name="vu_meter_bars">Barras</string>
+    <string name="vu_meter_needles">Agujas</string>
+    <string name="vu_meter_off">Desactivado</string>
+    <string name="vu_meter_unavailable">Nivel no disponible para esta salida de audio</string>
+    <string name="vu_meter_scale">L / R · RMS · −48 … 0 dBFS</string>
+</resources>

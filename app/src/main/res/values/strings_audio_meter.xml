@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vu_meter_title">Audio level meter</string>
+    <string name="vu_meter_description">Real audio levels: choose a display style or turn the meter off.</string>
+    <string name="vu_meter_segments">Segments</string>
+    <string name="vu_meter_bars">Bars</string>
+    <string name="vu_meter_needles">Needles</string>
+    <string name="vu_meter_off">Off</string>
+    <string name="vu_meter_unavailable">Level unavailable for this audio output</string>
+    <string name="vu_meter_scale">L / R · RMS · −48 … 0 dBFS</string>
+</resources>

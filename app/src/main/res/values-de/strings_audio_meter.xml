@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vu_meter_title">Audiopegelanzeige</string>
+    <string name="vu_meter_description">Echte Audiopegel: Anzeigestil wählen oder Anzeige ausschalten.</string>
+    <string name="vu_meter_segments">Segmente</string>
+    <string name="vu_meter_bars">Balken</string>
+    <string name="vu_meter_needles">Zeiger</string>
+    <string name="vu_meter_off">Aus</string>
+    <string name="vu_meter_unavailable">Pegel für diese Audioausgabe nicht verfügbar</string>
+    <string name="vu_meter_scale">L / R · RMS · −48 … 0 dBFS</string>
+</resources>

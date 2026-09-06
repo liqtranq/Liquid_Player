@@ -244,9 +244,10 @@ class DualPlayerEngine @Inject constructor(
     private var scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     var audioOutputMode: AudioOutputMode = AudioOutputMode.SYSTEM_DEFAULT
         private set
+    private var audioMeterEnabled = true
     private var audioOffloadEnabled = !shouldDisableAudioOffloadByDefault()
     private val audioOffloadEnabledForCurrentMode: Boolean
-        get() = shouldEnableAudioOffloadForMode(audioOffloadEnabled, audioOutputMode)
+        get() = !audioMeterEnabled && shouldEnableAudioOffloadForMode(audioOffloadEnabled, audioOutputMode)
     private val transitionRunTracker = TransitionRunTracker()
     private var transitionJob: Job? = null
     private var bufferingFallbackJob: Job? = null
@@ -1009,15 +1010,15 @@ class DualPlayerEngine @Inject constructor(
                     // Android's audio policy may
                     // grant a DIRECT thread for a compatible device/format, or safely fall back
                     // to the mixed path. This deliberately does not promise exclusive output.
-                    return requireNotNull(
+                    return MeteringAudioSink(requireNotNull(
                         super.buildAudioSink(
                             context,
                             false,
                             enableAudioOutputPlaybackParams
                         )
-                    ) { "Media3 did not create its default AudioSink" }
+                    ) { "Media3 did not create its default AudioSink" }, requirePcm = audioMeterEnabled)
                 }
-                return DefaultAudioSink.Builder(context)
+                return MeteringAudioSink(DefaultAudioSink.Builder(context)
                     .setEnableFloatOutput(audioOutputMode.usesFloatOutput)
                     .setEnableAudioOutputPlaybackParameters(enableAudioOutputPlaybackParams)
                     .setAudioProcessorChain(
@@ -1026,7 +1027,7 @@ class DualPlayerEngine @Inject constructor(
                             SurroundDownmixProcessor()
                         )
                     )
-                    .build()
+                    .build(), requirePcm = audioMeterEnabled)
             }
 
             override fun buildVideoRenderers(
@@ -1199,6 +1200,14 @@ class DualPlayerEngine @Inject constructor(
             absoluteIndex = targetIndex,
             queueSize = snapshot.size
         )
+    }
+
+    fun setAudioMeterEnabled(enabled: Boolean) {
+        if (audioMeterEnabled == enabled) return
+        audioMeterEnabled = enabled
+        if (::playerA.isInitialized && !isReleased) {
+            rebuildPlayersPreservingMasterState("Audio meter PCM requirement changed")
+        }
     }
 
     fun setAudioOutputMode(mode: AudioOutputMode) {

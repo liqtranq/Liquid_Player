@@ -36,6 +36,24 @@ class ThemeStateHolder @Inject constructor(
     @Volatile
     private var currentPaletteAccuracy: Int = AlbumArtColorAccuracy.DEFAULT
 
+    data class ArtworkTheme(val uri: String?, val scheme: ColorSchemePair?)
+    private val _artworkTheme = MutableStateFlow(ArtworkTheme(null, null))
+    private val _activeArtworkTheme = MutableStateFlow(ArtworkTheme(null, null))
+    val activeArtworkTheme = _activeArtworkTheme.asStateFlow()
+    @Volatile private var requestedArtworkUri: String? = null
+    private val requestGeneration = java.util.concurrent.atomic.AtomicLong()
+
+    fun selectCurrentArtwork(uri: String?) {
+        requestedArtworkUri = uri
+        requestGeneration.incrementAndGet()
+    }
+
+    private fun publishTheme(uri: String?, scheme: ColorSchemePair?) {
+        _artworkTheme.value = ArtworkTheme(uri, scheme)
+        _currentAlbumArtUri.value = uri
+        _currentAlbumArtColorSchemePair.value = scheme
+    }
+
     private val _currentAlbumArtColorSchemePair = MutableStateFlow<ColorSchemePair?>(null)
     val currentAlbumArtColorSchemePair: StateFlow<ColorSchemePair?> = _currentAlbumArtColorSchemePair.asStateFlow()
     private val _currentAlbumArtUri = MutableStateFlow<String?>(null)
@@ -56,17 +74,20 @@ class ThemeStateHolder @Inject constructor(
             combine(
                 playerThemePreference,
                 themePreferencesRepository.globalNowPlayingThemeEnabledFlow,
-                _currentAlbumArtColorSchemePair
-            ) { playerPref, useNowPlayingColorsAppWide, albumScheme ->
+                _artworkTheme
+            ) { playerPref, useNowPlayingColorsAppWide, albumTheme ->
                 if (
                     playerPref == com.lostf1sh.pixelplayeross.data.preferences.ThemePreference.ALBUM_ART ||
                     useNowPlayingColorsAppWide
                 ) {
-                    albumScheme
+                    albumTheme
                 } else {
-                    null
+                    ArtworkTheme(null, null)
                 }
-            }.collect { _activePlayerColorSchemePair.value = it }
+            }.collect {
+                _activeArtworkTheme.value = it
+                _activePlayerColorSchemePair.value = it.scheme
+            }
         }
 
         scope.launch {
@@ -82,13 +103,16 @@ class ThemeStateHolder @Inject constructor(
 
                     if (!paletteChanged) return@collect
 
-                    val uri = _currentAlbumArtUri.value ?: return@collect
+                    requestGeneration.incrementAndGet()
+                    val uri = requestedArtworkUri ?: return@collect
                     val refreshedScheme = colorSchemeProcessor.getOrGenerateColorScheme(
                         albumArtUri = uri,
                         paletteStyle = style,
                         colorAccuracyLevel = accuracy
                     )
-                    _currentAlbumArtColorSchemePair.value = refreshedScheme
+                    if (requestedArtworkUri == uri && currentPaletteStyle == style && currentPaletteAccuracy == accuracy) {
+                        publishTheme(uri, refreshedScheme)
+                    }
                     individualAlbumColorSchemes[uri]?.value = refreshedScheme
                 }
         }
@@ -105,11 +129,11 @@ class ThemeStateHolder @Inject constructor(
         currentSongUriString: String?,
         isPreload: Boolean = false
     ): Unit = traceAsyncSection("ThemeStateHolder.extractAndGenerateColorScheme") {
+        val generation = requestGeneration.get()
         try {
             if (albumArtUriAsUri == null) {
                 if (!isPreload && currentSongUriString == null) {
-                    _currentAlbumArtColorSchemePair.value = null
-                    _currentAlbumArtUri.value = null
+                    if (requestedArtworkUri == null) publishTheme(null, null)
                 }
                 return@traceAsyncSection
             }
@@ -121,15 +145,14 @@ class ThemeStateHolder @Inject constructor(
                 colorAccuracyLevel = currentPaletteAccuracy
             )
 
-            if (!isPreload && currentSongUriString == uriString) {
-                _currentAlbumArtColorSchemePair.value = schemePair
-                _currentAlbumArtUri.value = uriString
+            if (!isPreload && currentSongUriString == uriString && requestedArtworkUri == uriString && requestGeneration.get() == generation) {
+                publishTheme(uriString, schemePair)
             }
+        } catch (e: kotlinx.coroutines.CancellationException) {
+            throw e
         } catch (e: Exception) {
-            if (!isPreload && albumArtUriAsUri != null && currentSongUriString == albumArtUriAsUri.toString()) {
-                _currentAlbumArtColorSchemePair.value = null
-                _currentAlbumArtUri.value = null
-            }
+            Timber.tag("ThemeStateHolder").w(e, "Could not load artwork palette")
+            // Keep the displayed palette on a transient loading failure.
         }
     }
 
@@ -244,8 +267,7 @@ class ThemeStateHolder @Inject constructor(
         regenerateAllStyles: Boolean = false
     ) {
          if (uriString == null) {
-             _currentAlbumArtColorSchemePair.value = null
-             _currentAlbumArtUri.value = null
+             if (requestedArtworkUri == null) publishTheme(null, null)
              return
          }
 
@@ -282,9 +304,9 @@ class ThemeStateHolder @Inject constructor(
              activeFlow.value = newScheme
          }
          
-         if (_currentAlbumArtUri.value == uriString) {
+         if (requestedArtworkUri == uriString) {
              Timber.tag("ThemeStateHolder").d("Updating global color scheme flow directly.")
-             _currentAlbumArtColorSchemePair.value = newScheme
+             publishTheme(uriString, newScheme)
          } else {
              Timber.tag("ThemeStateHolder").d("Global URI did not match. Skipping global update.")
          }

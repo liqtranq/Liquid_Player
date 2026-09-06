@@ -125,6 +125,11 @@ fun ToggleSegmentButton(
         androidx.compose.material3.Text(
             text = text,
             color = if (active) activeContentColor else inactiveContentColor,
+            modifier = Modifier.padding(horizontal = 8.dp),
+            maxLines = 1,
+            softWrap = false,
+            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+            textAlign = androidx.compose.ui.text.style.TextAlign.Center,
             style = androidx.compose.material3.MaterialTheme.typography.bodyMedium,
             fontWeight = androidx.compose.ui.text.font.FontWeight.Bold
         )

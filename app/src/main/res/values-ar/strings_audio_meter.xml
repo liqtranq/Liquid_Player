@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vu_meter_title">مؤشر مستوى الصوت</string>
+    <string name="vu_meter_description">مستويات الصوت الفعلية. اختر نمط العرض أو أوقف المؤشر.</string>
+    <string name="vu_meter_segments">مقاطع</string>
+    <string name="vu_meter_bars">أشرطة</string>
+    <string name="vu_meter_needles">إبر</string>
+    <string name="vu_meter_off">إيقاف</string>
+    <string name="vu_meter_unavailable">المستوى غير متاح لهذا المخرج الصوتي</string>
+    <string name="vu_meter_scale">L / R · RMS · −48 … 0 dBFS</string>
+</resources>

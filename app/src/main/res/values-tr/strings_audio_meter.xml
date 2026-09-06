@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vu_meter_title">Ses seviyesi göstergesi</string>
+    <string name="vu_meter_description">Gerçek ses seviyeleri: bir görünüm seçin veya göstergeyi kapatın.</string>
+    <string name="vu_meter_segments">Segmentler</string>
+    <string name="vu_meter_bars">Çubuklar</string>
+    <string name="vu_meter_needles">İbreler</string>
+    <string name="vu_meter_off">Kapalı</string>
+    <string name="vu_meter_unavailable">Bu ses çıkışı için seviye kullanılamıyor</string>
+    <string name="vu_meter_scale">L / R · RMS · −48 … 0 dBFS</string>
+</resources>

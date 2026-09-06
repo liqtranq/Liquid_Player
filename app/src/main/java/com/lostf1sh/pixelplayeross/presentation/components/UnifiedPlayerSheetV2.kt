@@ -469,8 +469,9 @@ fun UnifiedPlayerSheetV2(
         }
     }
 
-    val activePlayerSchemePair by playerViewModel.activePlayerColorSchemePair.collectAsStateWithLifecycle()
-    val themedAlbumArtUri by playerViewModel.currentThemedAlbumArtUri.collectAsStateWithLifecycle()
+    val artworkTheme by playerViewModel.activeArtworkTheme.collectAsStateWithLifecycle()
+    val activePlayerSchemePair = artworkTheme.scheme
+    val themedAlbumArtUri = artworkTheme.uri
     val isDarkTheme = LocalPixelPlayerDarkTheme.current
     val currentSong = infrequentPlayerState.currentSong
     val sheetThemeState = rememberSheetThemeState(

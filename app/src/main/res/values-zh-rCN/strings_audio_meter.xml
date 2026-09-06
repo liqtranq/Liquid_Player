@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vu_meter_title">音频电平表</string>
+    <string name="vu_meter_description">显示真实音频电平。选择显示样式或关闭电平表。</string>
+    <string name="vu_meter_segments">分段</string>
+    <string name="vu_meter_bars">条形</string>
+    <string name="vu_meter_needles">指针</string>
+    <string name="vu_meter_off">关闭</string>
+    <string name="vu_meter_unavailable">此音频输出无法提供电平</string>
+    <string name="vu_meter_scale">L / R · RMS · −48 … 0 dBFS</string>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vu_meter_title">Lydnivåmåler</string>
+    <string name="vu_meter_description">Faktiske lydnivåer: velg visningsstil eller slå av måleren.</string>
+    <string name="vu_meter_segments">Segmenter</string>
+    <string name="vu_meter_bars">Stolper</string>
+    <string name="vu_meter_needles">Visere</string>
+    <string name="vu_meter_off">Av</string>
+    <string name="vu_meter_unavailable">Nivå er ikke tilgjengelig for denne lydutgangen</string>
+    <string name="vu_meter_scale">L / R · RMS · −48 … 0 dBFS</string>
+</resources>

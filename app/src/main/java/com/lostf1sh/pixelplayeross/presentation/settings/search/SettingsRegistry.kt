@@ -243,6 +243,16 @@ object SettingsRegistry {
                 keywordsStatic = listOf("corners", "shape", "rounded", "squircle", "performance")
             ),
             SettingSpec(
+                id = "appearance_vu_meter",
+                itemKey = "item_appearance_vu_meter",
+                titleRes = R.string.vu_meter_title,
+                subtitleRes = R.string.vu_meter_description,
+                category = SettingsCategory.APPEARANCE,
+                subscreenRoute = Screen.SettingsCategory.createRoute("appearance"),
+                type = SettingType.NAVIGABLE_CARD,
+                keywordsStatic = listOf("VU", "meter", "audio", "индикатор", "стрелки", "уровень")
+            ),
+            SettingSpec(
                 id = "appearance_player_theme",
                 itemKey = "item_appearance_player_theme",
                 titleRes = R.string.setcat_player_theme_label,

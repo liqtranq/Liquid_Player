@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vu_meter_title">Pengukur level audio</string>
+    <string name="vu_meter_description">Level audio nyata: pilih gaya tampilan atau matikan pengukur.</string>
+    <string name="vu_meter_segments">Segmen</string>
+    <string name="vu_meter_bars">Batang</string>
+    <string name="vu_meter_needles">Jarum</string>
+    <string name="vu_meter_off">Nonaktif</string>
+    <string name="vu_meter_unavailable">Level tidak tersedia untuk output audio ini</string>
+    <string name="vu_meter_scale">L / R · RMS · −48 … 0 dBFS</string>
+</resources>

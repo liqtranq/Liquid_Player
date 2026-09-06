@@ -450,6 +450,12 @@ class MusicService : MediaSessionService() {
         }
 
         serviceScope.launch {
+            userPreferencesRepository.vuMeterStyleFlow.collect { style ->
+                engine.setAudioMeterEnabled(style != com.lostf1sh.pixelplayeross.data.preferences.VuMeterStyle.OFF)
+            }
+        }
+
+        serviceScope.launch {
             userPreferencesRepository.audioOutputModeFlow.collect { mode ->
                 engine.setAudioOutputMode(mode)
             }

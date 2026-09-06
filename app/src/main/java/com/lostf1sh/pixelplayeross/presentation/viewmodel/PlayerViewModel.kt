@@ -107,6 +107,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
@@ -404,6 +405,7 @@ class PlayerViewModel @Inject constructor(
     val selectedSongForInfo: StateFlow<Song?> = _selectedSongForInfo.asStateFlow()
 
     val currentAlbumArtColorSchemePair: StateFlow<ColorSchemePair?> = themeStateHolder.currentAlbumArtColorSchemePair
+    val activeArtworkTheme = themeStateHolder.activeArtworkTheme
     val activePlayerColorSchemePair: StateFlow<ColorSchemePair?> = themeStateHolder.activePlayerColorSchemePair
     val currentThemedAlbumArtUri: StateFlow<String?> = themeStateHolder.currentAlbumArtUri
 
@@ -836,14 +838,15 @@ class PlayerViewModel @Inject constructor(
             themeStateHolder.extractAndGenerateColorScheme(
                 albumArtUriAsUri = artworkUri.toUri(),
                 currentSongUriString = artworkUri,
-                isPreload = false
+                isPreload = true
             )
         }
 
         stablePlayerState
             .map { it.currentSong?.albumArtUriString?.takeIf { uri -> uri.isNotBlank() } }
             .distinctUntilChanged()
-            .onEach { artworkUri ->
+            .mapLatest { artworkUri ->
+                themeStateHolder.selectCurrentArtwork(artworkUri)
                 themeStateHolder.extractAndGenerateColorScheme(
                     albumArtUriAsUri = artworkUri?.toUri(),
                     currentSongUriString = artworkUri,

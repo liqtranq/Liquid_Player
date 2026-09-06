@@ -689,6 +689,20 @@ fun SettingsCategoryScreen(
 
                             SettingsSubsection(title = stringResource(R.string.setcat_now_playing)) {
                                 ThemeSelectorItem(
+                                    label = stringResource(R.string.vu_meter_title),
+                                    description = stringResource(R.string.vu_meter_description),
+                                    options = mapOf(
+                                        "segments" to stringResource(R.string.vu_meter_segments),
+                                        "bars" to stringResource(R.string.vu_meter_bars),
+                                        "needles" to stringResource(R.string.vu_meter_needles),
+                                        "off" to stringResource(R.string.vu_meter_off)
+                                    ),
+                                    selectedKey = uiState.vuMeterStyle,
+                                    onSelectionChanged = settingsViewModel::setVuMeterStyle,
+                                    leadingIcon = { Icon(Icons.Outlined.Style, null, tint = MaterialTheme.colorScheme.secondary) },
+                                    modifier = Modifier.settingHighlight("item_appearance_vu_meter", highlightKey)
+                                )
+                                ThemeSelectorItem(
                                     label = stringResource(R.string.setcat_player_theme_label),
                                     description = stringResource(R.string.setcat_player_theme_desc),
                                     options = mapOf(

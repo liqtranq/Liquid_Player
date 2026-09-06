@@ -10,6 +10,25 @@ import org.junit.jupiter.api.Test
 import java.nio.file.Files
 
 class UserPreferencesRepositoryTest {
+    @Test
+    fun `meter styles persist and unknown values fall back to segments`() = runTest {
+        val tempDir = Files.createTempDirectory("meter-preferences-test")
+        try {
+            val store = PreferenceDataStoreFactory.create(scope = backgroundScope,
+                produceFile = { tempDir.resolve("settings.preferences_pb").toFile() })
+            val repository = UserPreferencesRepository(store, Json)
+            assertEquals(VuMeterStyle.SEGMENTS, repository.vuMeterStyleFlow.first())
+            for (style in listOf(VuMeterStyle.BARS, VuMeterStyle.NEEDLES, VuMeterStyle.OFF)) {
+                repository.setVuMeterStyle(style)
+                assertEquals(style, UserPreferencesRepository(store, Json).vuMeterStyleFlow.first())
+            }
+            repository.setVuMeterStyle("unknown")
+            assertEquals(VuMeterStyle.SEGMENTS, repository.vuMeterStyleFlow.first())
+        } finally {
+            tempDir.toFile().deleteRecursively()
+        }
+    }
+
 
     @Test
     fun `artist filter defaults to enabled and persists without requiring a rescan`() = runTest {

@@ -683,7 +683,7 @@ fun LyricsSheet(
                     modifier = Modifier
                         .align(Alignment.TopStart)
                         .zIndex(2f)
-                        .wrapContentWidth(),
+                        .fillMaxWidth(),
                     label = "headerAnimation"
                 ) { song ->
                     LyricsTrackInfo(
@@ -697,8 +697,7 @@ fun LyricsSheet(
                                 color = backgroundColor,
                                 shape = CircleShape
                             )
-                            .wrapContentWidth()
-                            .animateContentSize(),
+                            .fillMaxWidth(),
                         backgroundColor = backgroundColor,
                         contentColor = onBackgroundColor,
                         isPlaying = isPlaying
@@ -2006,21 +2005,6 @@ private fun LyricsTrackInfo(
 
     val albumShape = CircleShape
 
-    val currentRotation = remember { Animatable(0f) }
-    
-    LaunchedEffect(isPlaying) {
-        if (isPlaying) {
-            while (true) {
-                currentRotation.animateTo(
-                    targetValue = currentRotation.value + 360f,
-                    animationSpec = tween(8000, easing = LinearEasing)
-                )
-            }
-        } else {
-             currentRotation.stop()
-        }
-    }
-
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
@@ -2033,16 +2017,14 @@ private fun LyricsTrackInfo(
             modifier = Modifier
                 .size(66.dp)
                 .padding(6.dp)
-                .graphicsLayer {
-                    rotationZ = currentRotation.value % 360f
-                }
+                .recordRotation(isPlaying)
                 .clip(albumShape),
             contentScale = ContentScale.Crop
         )
 
         Column(
             modifier = Modifier
-                .weight(1f, fill = false)
+                .weight(1f)
                 .padding(vertical = 6.dp)
                 .padding(end = 6.dp),
             verticalArrangement = Arrangement.Center

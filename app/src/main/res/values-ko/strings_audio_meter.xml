@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vu_meter_title">오디오 레벨 미터</string>
+    <string name="vu_meter_description">실제 오디오 레벨입니다. 표시 스타일을 선택하거나 미터를 끄세요.</string>
+    <string name="vu_meter_segments">분할 막대</string>
+    <string name="vu_meter_bars">막대</string>
+    <string name="vu_meter_needles">바늘</string>
+    <string name="vu_meter_off">끄기</string>
+    <string name="vu_meter_unavailable">이 오디오 출력에서는 레벨을 사용할 수 없습니다</string>
+    <string name="vu_meter_scale">L / R · RMS · −48 … 0 dBFS</string>
+</resources>

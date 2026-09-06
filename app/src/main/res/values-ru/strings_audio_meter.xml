@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vu_meter_title">Индикатор уровня звука</string>
+    <string name="vu_meter_description">Уровень реального аудиосигнала. Выберите оформление или отключите индикатор.</string>
+    <string name="vu_meter_segments">Сегменты</string>
+    <string name="vu_meter_bars">Полосы</string>
+    <string name="vu_meter_needles">Стрелки</string>
+    <string name="vu_meter_off">Выключен</string>
+    <string name="vu_meter_unavailable">Уровень недоступен для этого аудиовыхода</string>
+    <string name="vu_meter_scale">Л / П · RMS · −48 … 0 dBFS</string>
+</resources>

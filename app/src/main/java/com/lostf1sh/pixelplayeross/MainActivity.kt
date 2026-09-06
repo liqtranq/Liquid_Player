@@ -265,12 +265,9 @@ class MainActivity : ComponentActivity() {
             val globalNowPlayingThemeEnabled by themePreferencesRepository
                 .globalNowPlayingThemeEnabledFlow
                 .collectAsStateWithLifecycle(initialValue = false)
-            val activePlayerColorSchemePair by playerViewModel
-                .activePlayerColorSchemePair
-                .collectAsStateWithLifecycle()
-            val themedAlbumArtUri by playerViewModel
-                .currentThemedAlbumArtUri
-                .collectAsStateWithLifecycle()
+            val artworkTheme by playerViewModel.activeArtworkTheme.collectAsStateWithLifecycle()
+            val activePlayerColorSchemePair = artworkTheme.scheme
+            val themedAlbumArtUri = artworkTheme.uri
             val stablePlayerState by playerViewModel
                 .stablePlayerState
                 .collectAsStateWithLifecycle()
@@ -301,7 +298,8 @@ class MainActivity : ComponentActivity() {
                 isPlaying = stablePlayerState.isPlaying,
                 currentSongScheme = currentSongScheme,
                 lastValidSongId = lastValidNowPlayingSongId,
-                lastValidScheme = lastValidNowPlayingScheme
+                lastValidScheme = lastValidNowPlayingScheme,
+                hasArtwork = !stablePlayerState.currentSong?.albumArtUriString.isNullOrBlank()
             )
             val isSetupComplete by mainViewModel.isSetupComplete.collectAsStateWithLifecycle()
             

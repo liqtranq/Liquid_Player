@@ -97,9 +97,9 @@ internal fun MiniPlayerContentInternal(
                 SmartImage(
                     model = albumArtModel,
                     contentDescription = stringResource(R.string.cd_album_art_for_title, song.title),
-                    shape = RoundedCornerShape(4.dp),
+                    shape = CircleShape,
                     targetSize = Size(150, 150),
-                    modifier = Modifier.size(44.dp)
+                    modifier = Modifier.size(48.dp).recordRotation(isPlaying && canScroll && controlsEnabled)
                 )
             }
             if (isOutputConnecting) {

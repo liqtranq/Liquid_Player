@@ -4,7 +4,7 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import com.google.common.truth.Truth.assertThat
 import com.lostf1sh.pixelplayeross.presentation.viewmodel.ColorSchemePair
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 class AppWideNowPlayingThemeTest {
 
@@ -54,7 +54,7 @@ class AppWideNowPlayingThemeTest {
     }
 
     @Test
-    fun `stale palette from another song is not reused`() {
+    fun `last displayed palette is retained until next song palette arrives`() {
         val resolved = resolveAppWideNowPlayingColorSchemePair(
             enabled = true,
             currentSongId = "song-2",
@@ -64,6 +64,24 @@ class AppWideNowPlayingThemeTest {
             lastValidScheme = lastScheme
         )
 
+        assertThat(resolved).isSameInstanceAs(lastScheme)
+    }
+    @Test
+    fun `playing keeps its displayed palette while artwork is loading`() {
+        val resolved = resolveAppWideNowPlayingColorSchemePair(
+            enabled = true, currentSongId = "song-2", isPlaying = true,
+            currentSongScheme = null, lastValidSongId = "song-1", lastValidScheme = lastScheme
+        )
+        assertThat(resolved).isSameInstanceAs(lastScheme)
+    }
+
+    @Test
+    fun `tracks without artwork use the base theme`() {
+        val resolved = resolveAppWideNowPlayingColorSchemePair(
+            enabled = true, currentSongId = "song-2", isPlaying = true,
+            currentSongScheme = null, lastValidSongId = "song-1", lastValidScheme = lastScheme,
+            hasArtwork = false
+        )
         assertThat(resolved).isNull()
     }
 }

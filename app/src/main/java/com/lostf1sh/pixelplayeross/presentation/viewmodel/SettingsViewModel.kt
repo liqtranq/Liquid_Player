@@ -86,6 +86,7 @@ data class SettingsUiState(
     val blockedDirectories: Set<String> = emptySet(),
     val appRebrandDialogShown: Boolean = false,
     val fullPlayerLoadingTweaks: FullPlayerLoadingTweaks = FullPlayerLoadingTweaks(),
+    val vuMeterStyle: String = "segments",
     val showPlayerFileInfo: Boolean = true,
     val albumArtQuality: AlbumArtQuality = AlbumArtQuality.MEDIUM,
     val albumArtCacheLimitMb: Int = 200,
@@ -219,7 +220,16 @@ class SettingsViewModel @Inject constructor(
     private val _dataTransferEvents = Channel<String>(Channel.BUFFERED)
     val dataTransferEvents: Flow<String> = _dataTransferEvents.receiveAsFlow()
 
+    fun setVuMeterStyle(style: String) {
+        viewModelScope.launch { userPreferencesRepository.setVuMeterStyle(style) }
+    }
+
     init {
+        viewModelScope.launch {
+            userPreferencesRepository.vuMeterStyleFlow.collect { style ->
+                _uiState.update { it.copy(vuMeterStyle = style) }
+            }
+        }
         viewModelScope.launch {
             backupManager.getBackupHistory().collect { history ->
                 _uiState.update { it.copy(backupHistory = history.toImmutableList()) }
