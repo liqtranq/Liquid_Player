@@ -213,12 +213,9 @@
     <string name="word_delimiter_toast_reset">Pemisah kata direset ke default</string>
     <string name="word_delimiters_screen_title">Pemisah Kata</string>
     <string name="about_tagline">Pemutar musik Android dengan fitur lanjutan.</string>
-    <string name="about_maintainer_title">Pengembang</string>
     <string name="about_project_subtitle">Kode sumber dan unduhan.</string>
     <string name="about_link_releases_title">Rilis</string>
     <string name="about_link_releases_subtitle">Unduh Liquid Player dari GitHub</string>
-    <string name="about_developer_role">Pengembang Liquid Player</string>
-    <string name="about_developer_detail">Desain dan alat musik tambahan.</string>
     <string name="about_signal_local">Musik lokal</string>
     <string name="about_signal_customizable">Dapat disesuaikan</string>
     <string name="about_origins_title">Arsitektur dan ucapan terima kasih</string>

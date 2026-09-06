@@ -10,13 +10,13 @@
 ![Android 11+](https://img.shields.io/badge/Android-11%2B-3DDC84?style=flat-square)
 [![License](https://img.shields.io/badge/License-GPL--3.0--or--later-blue?style=flat-square)](LICENSE)
 
-[Скачать APK](https://github.com/liqtranq/Liquid_Player/releases) · [Сообщить об ошибке](https://github.com/liqtranq/Liquid_Player/issues) · [liqtranq](https://github.com/liqtranq)
+[Скачать APK](https://github.com/liqtranq/Liquid_Player/releases) · [Сообщить об ошибке](https://github.com/liqtranq/Liquid_Player/issues)
 
 </div>
 
 ## О плеере
 
-Liquid Player — музыкальный плеер для Android, который развивает [liqtranq](https://github.com/liqtranq). Слушайте музыку с устройства, наводите порядок в библиотеке, редактируйте теги и подбирайте обложки в одном приложении.
+Liquid Player — музыкальный плеер для Android с расширенными возможностями. Слушайте музыку с устройства, наводите порядок в библиотеке, редактируйте теги и подбирайте обложки в одном приложении.
 
 В оформлении — тёмные поверхности, тёплые оранжевые акценты и элементы, вдохновлённые аудиотехникой. Доступны светлая тема и настройки внешнего вида.
 
@@ -64,6 +64,6 @@ cd Liquid_Player
 
 ## Лицензия
 
-[GPL-3.0-or-later](LICENSE). Исходные уведомления об авторских правах сохранены: PixelPlayerOSS, Copyright (C) 2026 Theo Vilardo. Изменения Liquid Player — liqtranq и участники проекта.
+[GPL-3.0-or-later](LICENSE). Исходные уведомления об авторских правах сохранены: PixelPlayerOSS, Copyright (C) 2026 Theo Vilardo.
 
 [Компоненты и благодарности](THIRD_PARTY_NOTICES.md) · [Конфиденциальность](PRIVACY.md) · [Безопасность](SECURITY.md)

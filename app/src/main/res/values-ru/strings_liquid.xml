@@ -2,7 +2,7 @@
 <resources>
     <string-array name="liquid_changelog_041">
         <item>Короткое описание в About, актуальные названия и ссылки на GitHub.</item>
-        <item>Liquid Player от liqtranq и отдельная благодарность авторам PixelPlayer.</item>
+        <item>Отдельная благодарность авторам PixelPlayer.</item>
         <item>Исправлены версия приложения и настройки сборок GitHub.</item>
     </string-array>
     <string-array name="liquid_changelog_040">

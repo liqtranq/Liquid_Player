@@ -213,12 +213,9 @@
     <string name="word_delimiter_toast_reset">Orddelimitere tilbakestilt til standard</string>
     <string name="word_delimiters_screen_title">Orddelimitere</string>
     <string name="about_tagline">En musikkspiller for Android med avanserte funksjoner.</string>
-    <string name="about_maintainer_title">Utvikler</string>
     <string name="about_project_subtitle">Kildekode og nedlastinger.</string>
     <string name="about_link_releases_title">Utgivelser</string>
     <string name="about_link_releases_subtitle">Last ned Liquid Player fra GitHub</string>
-    <string name="about_developer_role">Utvikler av Liquid Player</string>
-    <string name="about_developer_detail">Design og flere musikkverktøy.</string>
     <string name="about_signal_local">Lokal musikk</string>
     <string name="about_signal_customizable">Kan tilpasses</string>
     <string name="about_origins_title">Arkitektur og takk</string>

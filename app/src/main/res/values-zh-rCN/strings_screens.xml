@@ -234,12 +234,9 @@
     <string name="cd_genre_illustration">流派配图</string>
     <string name="dash_last_synced_format">上次同步：%1$s</string>
     <string name="about_tagline">一款功能丰富的 Android 音乐播放器。</string>
-    <string name="about_maintainer_title">开发者</string>
     <string name="about_project_subtitle">源代码与下载。</string>
     <string name="about_link_releases_title">发布版本</string>
     <string name="about_link_releases_subtitle">从 GitHub 下载 Liquid Player</string>
-    <string name="about_developer_role">Liquid Player 开发者</string>
-    <string name="about_developer_detail">界面设计与音乐扩展工具。</string>
     <string name="about_signal_local">本地音乐</string>
     <string name="about_signal_customizable">个性化设置</string>
     <string name="about_origins_title">架构与致谢</string>

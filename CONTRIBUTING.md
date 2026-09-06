@@ -1,6 +1,6 @@
 # Contributing to Liquid Player
 
-Thanks for your interest in improving Liquid Player by liqtranq. This guide covers
+Thanks for your interest in improving Liquid Player. This guide covers
 the conventions inherited from PixelPlayerOSS. See [README.md](README.md) for
 the project overview and upstream credits.
 

@@ -213,12 +213,9 @@
     <string name="word_delimiter_toast_reset">Wort-Trennzeichen zurückgesetzt</string>
     <string name="word_delimiters_screen_title">Wort-Trennzeichen</string>
     <string name="about_tagline">Ein Musikplayer für Android mit erweiterten Funktionen.</string>
-    <string name="about_maintainer_title">Entwickler</string>
     <string name="about_project_subtitle">Quellcode und Downloads.</string>
     <string name="about_link_releases_title">Versionen</string>
     <string name="about_link_releases_subtitle">Liquid Player von GitHub herunterladen</string>
-    <string name="about_developer_role">Entwickler von Liquid Player</string>
-    <string name="about_developer_detail">Design und zusätzliche Musikwerkzeuge.</string>
     <string name="about_signal_local">Lokale Musik</string>
     <string name="about_signal_customizable">Anpassbar</string>
     <string name="about_origins_title">Architektur und Danksagung</string>

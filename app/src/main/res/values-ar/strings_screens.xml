@@ -213,12 +213,9 @@
     <string name="word_delimiter_toast_reset">تمت إعادة تعيين محددات الكلمات إلى الافتراضية</string>
     <string name="word_delimiters_screen_title">محددات الكلمات</string>
     <string name="about_tagline">مشغل موسيقى لنظام Android بميزات متقدمة.</string>
-    <string name="about_maintainer_title">المطور</string>
     <string name="about_project_subtitle">الكود المصدري والتنزيلات.</string>
     <string name="about_link_releases_title">الإصدارات</string>
     <string name="about_link_releases_subtitle">تنزيل Liquid Player من GitHub</string>
-    <string name="about_developer_role">مطور Liquid Player</string>
-    <string name="about_developer_detail">التصميم وأدوات موسيقية إضافية.</string>
     <string name="about_signal_local">موسيقى محلية</string>
     <string name="about_signal_customizable">قابل للتخصيص</string>
     <string name="about_origins_title">البنية والشكر</string>

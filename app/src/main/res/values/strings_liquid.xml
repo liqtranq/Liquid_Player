@@ -3,7 +3,7 @@
     <!-- Release notes currently support English and Russian; other locales use English. -->
     <string-array name="liquid_changelog_041" tools:ignore="MissingTranslation">
         <item>Simpler About screen, updated app labels and GitHub links.</item>
-        <item>Liquid Player by liqtranq, with separate PixelPlayer architecture credits.</item>
+        <item>Separate credits for the PixelPlayer architecture.</item>
         <item>Corrected the app version and GitHub build configuration.</item>
     </string-array>
     <string-array name="liquid_changelog_040" tools:ignore="MissingTranslation">

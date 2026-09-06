@@ -213,12 +213,9 @@
     <string name="word_delimiter_toast_reset">Delimitadores de palabra restablecidos</string>
     <string name="word_delimiters_screen_title">Delimitadores de palabra</string>
     <string name="about_tagline">Un reproductor de música para Android con funciones avanzadas.</string>
-    <string name="about_maintainer_title">Desarrollador</string>
     <string name="about_project_subtitle">Código fuente y descargas.</string>
     <string name="about_link_releases_title">Versiones</string>
     <string name="about_link_releases_subtitle">Descargar Liquid Player desde GitHub</string>
-    <string name="about_developer_role">Desarrollador de Liquid Player</string>
-    <string name="about_developer_detail">Diseño y herramientas adicionales para música.</string>
     <string name="about_signal_local">Música local</string>
     <string name="about_signal_customizable">Personalizable</string>
     <string name="about_origins_title">Arquitectura y agradecimientos</string>

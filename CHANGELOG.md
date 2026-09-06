@@ -1,12 +1,12 @@
 # Changelog
 
-Changes to Liquid Player by liqtranq. Earlier PixelPlayerOSS history is preserved below.
+Changes to Liquid Player. Earlier PixelPlayerOSS history is preserved below.
 
 ## [0.4.1] - 2026-09-06
 
 ### Changed
 - Replaced the inherited repository overview with a concise Liquid Player introduction and feature list.
-- Simplified About, credited liqtranq as the developer, and separated PixelPlayer/PixelPlayerOSS architecture credits.
+- Simplified About and separated PixelPlayer/PixelPlayerOSS architecture credits.
 - Updated app labels, source and release links; removed the unrelated F-Droid and sponsorship buttons.
 - Documented the current demo status of Telegram Audio Deck.
 

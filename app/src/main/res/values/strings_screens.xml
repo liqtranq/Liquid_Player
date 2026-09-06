@@ -235,12 +235,9 @@
     <string name="cd_genre_illustration">Genre illustration</string>
     <string name="dash_last_synced_format">Last synced: %1$s</string>
     <string name="about_tagline">An Android music player with advanced features.</string>
-    <string name="about_maintainer_title">Developer</string>
     <string name="about_project_subtitle">Source code and downloads.</string>
     <string name="about_link_releases_title">Releases</string>
     <string name="about_link_releases_subtitle">Download Liquid Player from GitHub</string>
-    <string name="about_developer_role">Liquid Player developer</string>
-    <string name="about_developer_detail">Design and additional music tools.</string>
     <string name="about_signal_local">Local music</string>
     <string name="about_signal_customizable">Customizable</string>
     <string name="about_origins_title">Architecture and credits</string>
@@ -248,5 +245,4 @@
     <string name="about_origins_link">PixelPlayerOSS on GitHub</string>
     <string name="about_app_name" translatable="false">Liquid Player</string>
     <string name="about_link_source_subtitle" translatable="false">github.com/liqtranq/Liquid_Player</string>
-    <string name="about_maintainer_subtitle" translatable="false">Liquid Player · liqtranq</string>
 </resources>

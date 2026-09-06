@@ -1,4 +1,4 @@
-Liquid Player is an Android music player with advanced features, maintained by liqtranq.
+Liquid Player is an Android music player with advanced features.
 
 Listen to local music, organize albums and playlists, edit tags, choose artwork, and convert audio to M4A/AAC or WAV. Connect your own Navidrome/Subsonic or Jellyfin library, use local lyrics, and customize the player with themes and widgets.
 

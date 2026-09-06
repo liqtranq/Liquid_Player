@@ -13,7 +13,6 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.rememberTransition
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -32,11 +31,9 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -47,11 +44,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AutoAwesome
 import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material.icons.rounded.Public
-import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -63,20 +57,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
@@ -85,40 +74,19 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.lerp as lerpDp
-import androidx.compose.ui.util.lerp as lerpFloat
-import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
 import androidx.media3.common.util.UnstableApi
 import androidx.navigation.NavController
-import coil.compose.AsyncImagePainter
-import coil.request.ImageRequest
-import coil.size.Size
 import com.lostf1sh.pixelplayeross.R
 import com.lostf1sh.pixelplayeross.presentation.components.CollapsibleCommonTopBar
 import com.lostf1sh.pixelplayeross.presentation.components.MiniPlayerHeight
-import com.lostf1sh.pixelplayeross.presentation.components.SmartImage
 import com.lostf1sh.pixelplayeross.presentation.navigation.Screen
 import com.lostf1sh.pixelplayeross.presentation.navigation.navigateSafely
 import com.lostf1sh.pixelplayeross.presentation.viewmodel.PlayerViewModel
 import kotlinx.coroutines.launch
 import racra.compose.smooth_corner_rect_library.AbsoluteSmoothCornerShape
 import kotlin.math.roundToInt
-
-private data class Contributor(
-    val id: String,
-    val displayName: String,
-    val role: String,
-    val detail: String? = null,
-    val badge: String? = null,
-    val avatarUrl: String? = null,
-    @DrawableRes val iconRes: Int? = null,
-    val githubUrl: String? = null,
-    val telegramUrl: String? = null,
-    val contributions: Int? = null,
-)
 
 private const val SourceRepoUrl = "https://github.com/liqtranq/Liquid_Player"
 private const val ReleasesUrl = "$SourceRepoUrl/releases"
@@ -148,16 +116,6 @@ fun AboutScreen(
         "N/A"
     }
 
-    val maintainers = listOf(
-        Contributor(
-            id = "liqtranq",
-            displayName = "liqtranq",
-            role = stringResource(R.string.about_developer_role),
-            detail = stringResource(R.string.about_developer_detail),
-            iconRes = R.drawable.round_developer_board_24,
-            githubUrl = "https://github.com/liqtranq",
-        ),
-    )
     val projectLinks = listOf(
         ProjectLink(
             id = "source",
@@ -312,30 +270,6 @@ fun AboutScreen(
                         .padding(horizontal = 16.dp)
                         .padding(top = if (index == 0) 0.dp else 3.dp),
                     onClick = { openUrl(context, link.url) },
-                )
-            }
-
-            item(key = "maintainer_title") {
-                AboutSectionHeader(
-                    title = stringResource(R.string.about_maintainer_title),
-                    subtitle = stringResource(R.string.about_maintainer_subtitle),
-                    modifier = Modifier.padding(top = 24.dp),
-                )
-            }
-
-            itemsIndexed(
-                items = maintainers,
-                key = { _, contributor -> "maintainer_${contributor.id}" },
-            ) { index, contributor ->
-                ContributorCard(
-                    contributor = contributor,
-                    shape = expressiveListShape(index = index, count = maintainers.size),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
-                        .padding(top = if (index == 0) 0.dp else 3.dp),
-                    showContributionCount = false,
-                    onCardClick = contributor.githubUrl?.let { url -> { openUrl(context, url) } },
                 )
             }
 
@@ -627,233 +561,6 @@ private fun AboutLinkCard(
                 modifier = Modifier.size(22.dp),
             )
         }
-    }
-}
-
-@Composable
-private fun ContributorCard(
-    contributor: Contributor,
-    shape: AbsoluteSmoothCornerShape,
-    modifier: Modifier = Modifier,
-    showContributionCount: Boolean,
-    onCardClick: (() -> Unit)? = null,
-) {
-    val clickableModifier = if (onCardClick != null) {
-        Modifier.clickable(
-            interactionSource = remember { MutableInteractionSource() },
-            indication = LocalIndication.current,
-            role = Role.Button,
-            onClick = onCardClick,
-        )
-    } else {
-        Modifier
-    }
-
-    Surface(
-        modifier = modifier
-            .clip(shape)
-            .then(clickableModifier),
-        shape = shape,
-        color = MaterialTheme.colorScheme.surfaceContainer,
-        tonalElevation = 2.dp,
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 12.dp, vertical = 12.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            ContributorAvatar(
-                name = contributor.displayName,
-                avatarUrl = contributor.avatarUrl,
-                iconRes = contributor.iconRes ?: R.drawable.rounded_person_24,
-            )
-
-            Spacer(Modifier.width(12.dp))
-
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(end = 8.dp),
-            ) {
-                Text(
-                    text = contributor.displayName,
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.SemiBold,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
-
-                Text(
-                    text = contributor.role,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.padding(top = 1.dp),
-                )
-
-                contributor.detail?.takeIf { it.isNotBlank() }?.let { detail ->
-                    Text(
-                        text = detail,
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.padding(top = 4.dp),
-                    )
-                }
-
-                Row(
-                    modifier = Modifier.padding(top = 8.dp),
-                    horizontalArrangement = Arrangement.spacedBy(6.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    contributor.badge?.let { badge ->
-                        ContributorLabel(text = badge)
-                    }
-                    if (showContributionCount && contributor.contributions != null) {
-                        ContributorLabel(
-                            text = stringResource(
-                                R.string.about_contributions_format,
-                                contributor.contributions,
-                            ),
-                        )
-                    }
-                }
-            }
-
-            SocialIconButton(
-                painterRes = R.drawable.github,
-                contentDescription = stringResource(R.string.cd_open_github_profile),
-                url = contributor.githubUrl,
-            )
-            SocialIconButton(
-                painterRes = R.drawable.telegram,
-                contentDescription = stringResource(R.string.cd_open_telegram_profile),
-                url = contributor.telegramUrl,
-            )
-        }
-    }
-}
-
-@Composable
-private fun ContributorLabel(text: String) {
-    Surface(
-        shape = CircleShape,
-        color = MaterialTheme.colorScheme.secondaryContainer,
-    ) {
-        Text(
-            text = text,
-            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
-            style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.onSecondaryContainer,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-        )
-    }
-}
-
-@Composable
-private fun ContributorAvatar(
-    name: String,
-    avatarUrl: String?,
-    @DrawableRes iconRes: Int?,
-    modifier: Modifier = Modifier,
-) {
-    val containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
-    val iconTint = MaterialTheme.colorScheme.onSurfaceVariant
-    val letterBackground = MaterialTheme.colorScheme.surfaceContainerHighest
-    val letterTint = MaterialTheme.colorScheme.onSurfaceVariant
-    val initial = name.removePrefix("@").firstOrNull()?.uppercase() ?: "?"
-    var cachedBitmap by remember(avatarUrl) { mutableStateOf<ImageBitmap?>(null) }
-
-    Surface(
-        modifier = modifier.size(48.dp),
-        shape = CircleShape,
-        color = containerColor,
-        tonalElevation = 2.dp,
-    ) {
-        when {
-            cachedBitmap != null -> {
-                Image(
-                    bitmap = cachedBitmap!!,
-                    contentDescription = stringResource(R.string.cd_contributor_avatar, name),
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop,
-                )
-            }
-            !avatarUrl.isNullOrBlank() -> {
-                SmartImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(avatarUrl)
-                        .crossfade(true)
-                        .build(),
-                    contentDescription = stringResource(R.string.cd_contributor_avatar, name),
-                    modifier = Modifier.fillMaxSize(),
-                    shape = CircleShape,
-                    contentScale = ContentScale.Crop,
-                    placeholderResId = iconRes ?: R.drawable.ic_music_placeholder,
-                    errorResId = R.drawable.rounded_broken_image_24,
-                    targetSize = Size(96, 96),
-                    onState = { state ->
-                        if (state is AsyncImagePainter.State.Success) {
-                            cachedBitmap = state.result.drawable.toBitmap().asImageBitmap()
-                        }
-                    },
-                )
-            }
-            iconRes != null -> {
-                Box(
-                    Modifier
-                        .fillMaxSize()
-                        .background(letterBackground),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Icon(
-                        painter = painterResource(iconRes),
-                        contentDescription = stringResource(R.string.cd_contributor_icon, name),
-                        tint = iconTint,
-                        modifier = Modifier.size(28.dp),
-                    )
-                }
-            }
-            else -> {
-                Box(
-                    Modifier
-                        .fillMaxSize()
-                        .background(letterBackground),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Text(
-                        text = initial,
-                        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                        color = letterTint,
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun SocialIconButton(
-    painterRes: Int,
-    contentDescription: String,
-    url: String?,
-    modifier: Modifier = Modifier,
-) {
-    if (url.isNullOrBlank()) return
-    val context = LocalContext.current
-    IconButton(
-        onClick = { openUrl(context, url) },
-        modifier = modifier.size(40.dp),
-    ) {
-        Icon(
-            painter = painterResource(painterRes),
-            contentDescription = contentDescription,
-            tint = MaterialTheme.colorScheme.primary,
-        )
     }
 }
 
